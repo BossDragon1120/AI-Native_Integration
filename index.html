@@ -254,7 +254,7 @@
   .navtile .nt-h{font-size:19px;font-weight:800;color:var(--navy);margin:0 0 5px}
   .navtile .nt-s{font-size:13px;color:var(--ink2);margin:0 0 14px;min-height:56px}
   .navtile .nt-go{font-weight:800;font-size:13.5px}
-  @media(max-width:820px){.topnav{flex-direction:column;align-items:stretch;gap:9px;padding:10px 12px}.topnav .brand{font-size:14px;justify-content:center}.navlinks{width:100%;justify-content:space-between;flex-wrap:nowrap;gap:5px}.navlinks{overflow-x:auto;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navlinks a{flex:0 0 auto;padding:8px 12px;font-size:12.5px;white-space:nowrap}.deckcta{flex-direction:column;align-items:stretch;gap:12px;padding:18px}.deckcta .thumb{width:100%;height:150px}.deckcta .dc-txt{width:100%}.deckcta .dc-btn{width:100%;justify-content:center}.deckcta .dc-h{font-size:20px}.deckcta .dc-s{max-width:none}}
+  @media(max-width:820px){.topnav{flex-direction:column;align-items:stretch;gap:9px;padding:10px 12px}.topnav .brand{font-size:14px;justify-content:center}.navlinks{width:100%;justify-content:center;flex-wrap:wrap;gap:6px}.navlinks a{flex:0 0 auto;padding:7px 13px;font-size:12.5px;white-space:nowrap}.deckcta{flex-direction:column;align-items:stretch;gap:12px;padding:18px}.deckcta .thumb{width:100%;height:150px}.deckcta .dc-txt{width:100%}.deckcta .dc-btn{width:100%;justify-content:center}.deckcta .dc-h{font-size:20px}.deckcta .dc-s{max-width:none}}
 
 
   /* shared tab components */
@@ -284,6 +284,7 @@
   .summ .s .n{font-size:22px;font-weight:800;color:var(--navy)}
   .summ .s .t{font-size:11.5px;color:var(--ink2)}
 
+  .fbody{display:flex;gap:22px;margin-top:10px}.fbody .fmain{flex:1.5;min-width:0}.fbody .fside{flex:1;min-width:0}.fside .raise{margin-top:0;height:100%}.panel{min-width:0}@media(max-width:820px){.fbody{flex-direction:column;gap:12px}}
 </style>
 </head>
 <body>
@@ -549,59 +550,66 @@
       <div class="s"><div class="n">3</div><div class="t">Healthy</div></div>
     </div>
     <h2 class="sec">Function-by-function</h2>
-    <div class="grid2">
+    <div class="stack">
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Product &amp; Technology</div><div class="kv" style="margin-top:2px">VP Product, Security &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Thu</span></div></div><span class="vtag a">Watch</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Identity Intelligence integration pod forming for Astrix</li><li>Galileo evals landing in Splunk Observability</li><li>ADLC instrumentation roadmap in draft</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Lock GA milestone dates across the three integrations</li><li>Resolve engineering resource contention</li><li>Decide data-contract ownership</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Identity Intelligence integration pod forming for Astrix</li><li>Galileo evals landing in Splunk Observability</li><li>ADLC instrumentation roadmap in draft</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Lock GA milestone dates across the three integrations</li><li>Resolve engineering resource contention</li><li>Decide data-contract ownership</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Splunk (Platform)</div><div class="kv" style="margin-top:2px">SVP/GM, Splunk &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Mon</span></div></div><span class="vtag g">Healthy</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Agentic SOC pod standing up</li><li>WideField telemetry pipeline being designed</li><li>Data Fabric identity enrichment scoped</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close is the key dependency — sequence work around it</li><li>Confirm SOC detection content-pack timeline</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Agentic SOC pod standing up</li><li>WideField telemetry pipeline being designed</li><li>Data Fabric identity enrichment scoped</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close is the key dependency — sequence work around it</li><li>Confirm SOC detection content-pack timeline</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Security BU</div><div class="kv" style="margin-top:2px">SVP/GM, Security &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Wed</span></div></div><span class="vtag g">Healthy</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Astrix folding into Identity Intelligence &amp; Duo</li><li>Zero-trust-for-agents GTM narrative forming</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Own the cross-deal trust-layer architecture</li><li>Align competitor positioning vs Palo Alto / CrowdStrike</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Astrix folding into Identity Intelligence &amp; Duo</li><li>Zero-trust-for-agents GTM narrative forming</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Own the cross-deal trust-layer architecture</li><li>Align competitor positioning vs Palo Alto / CrowdStrike</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Go-to-Market / Sales</div><div class="kv" style="margin-top:2px">Chief Revenue Officer &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Thu</span></div></div><span class="vtag a">Watch</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Field enablement kit being drafted</li><li>Unified trust-layer pitch in review</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField GTM is blocked on close — set a trigger plan</li><li>Agree quota / comp treatment for new SKUs</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Field enablement kit being drafted</li><li>Unified trust-layer pitch in review</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField GTM is blocked on close — set a trigger plan</li><li>Agree quota / comp treatment for new SKUs</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Customer Success</div><div class="kv" style="margin-top:2px">SVP, Customer Experience &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Tue</span></div></div><span class="vtag g">Healthy</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Continuity comms sent to Astrix &amp; Galileo bases</li><li>Exec 1:1s underway with top accounts</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Review at-risk / renewal-exposed accounts</li><li>Prep WideField customer comms for close</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Continuity comms sent to Astrix &amp; Galileo bases</li><li>Exec 1:1s underway with top accounts</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Review at-risk / renewal-exposed accounts</li><li>Prep WideField customer comms for close</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">People / HR</div><div class="kv" style="margin-top:2px">CHRO &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Fri</span></div></div><span class="vtag a">Watch</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Retention packages in flight</li><li>Combined-team org design in progress</li><li>Culture integration plan drafting</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Galileo &amp; WideField flight risk is high — approve retention budget</li><li>Confirm org-design decisions &amp; leveling</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Retention packages in flight</li><li>Combined-team org design in progress</li><li>Culture integration plan drafting</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Galileo &amp; WideField flight risk is high — approve retention budget</li><li>Confirm org-design decisions &amp; leveling</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Corp Dev / Legal</div><div class="kv" style="margin-top:2px">SVP, Corporate Development &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Mon</span></div></div><span class="vtag r">Needs attention</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Driving WideField to close</li><li>Diligence closeout on Astrix &amp; Galileo</li><li>Monitoring regulatory / acqui-hire scrutiny</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close timeline &amp; gating risks</li><li>Confirm TSA scope and legal-entity plan</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Driving WideField to close</li><li>Diligence closeout on Astrix &amp; Galileo</li><li>Monitoring regulatory / acqui-hire scrutiny</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close timeline &amp; gating risks</li><li>Confirm TSA scope and legal-entity plan</li></ul></div></div>
+        </div>
       </div>
       <div class="panel">
         <div class="p-head"><div><div class="p-title">Finance</div><div class="kv" style="margin-top:2px">CFO delegate / VP Finance &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Wed</span></div></div><span class="vtag a">Watch</span></div>
-        <div class="lbl2">What's happening</div>
-        <ul class="ul"><li>Synergy baselines being set</li><li>Integration budget tracking stood up</li></ul>
-        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Sign off synergy baselines at close</li><li>Agree value-capture reporting cadence</li></ul></div>
+        <div class="fbody">
+          <div class="fmain"><div class="lbl2">What's happening</div><ul class="ul"><li>Synergy baselines being set</li><li>Integration budget tracking stood up</li></ul></div>
+          <div class="fside"><div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Sign off synergy baselines at close</li><li>Agree value-capture reporting cadence</li></ul></div></div>
+        </div>
       </div>
     </div>
     <footer><div class="note">Illustrative operating view — leaders, cadences and status are placeholders for you to edit. Structured around the standard integration workstreams.</div></footer>
   </section>
-
   <section id="view-pipeline" class="view v-pipeline">
     <a class="backlink" href="#home">&larr; Overview</a>
     <header><div class="hbody">

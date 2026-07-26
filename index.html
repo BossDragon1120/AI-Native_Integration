@@ -63,13 +63,11 @@
 
   /* kpis */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column}
   .kpi .big{font-size:26px;font-weight:800;color:var(--navy);line-height:1.1}
-  .kpi .lbl{font-size:12.5px;color:var(--ink2);margin-top:6px}
-  .kpi .bar{height:7px;background:var(--slate-bg);border-radius:6px;margin-top:12px;overflow:hidden}
+  .kpi .lbl{font-size:12.5px;color:var(--ink2);margin:6px 0 12px}
+  .kpi .bar{height:7px;background:var(--slate-bg);border-radius:6px;margin-top:auto;overflow:hidden}
   .kpi .bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-d))}
-  .kpi.alert .big{color:var(--red)}
-  .kpi.alert .bar>i{background:linear-gradient(90deg,#e67e22,var(--red))}
 
   /* progress */
   .progwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);
@@ -243,7 +241,7 @@
     display:flex;align-items:center;gap:10px;white-space:nowrap}
   .topnav .brand .bd{display:inline-flex;gap:3px}
   .topnav .brand .bd i{width:9px;height:9px;border-radius:50%}
-  .navlinks{display:flex;gap:5px;flex-wrap:wrap}
+  .navlinks{display:flex;gap:4px;flex-wrap:wrap}
   .navlinks a{font-size:13.5px;font-weight:700;color:var(--ink2);text-decoration:none;padding:8px 15px;border-radius:999px;transition:.15s;cursor:pointer}
   .navlinks a:hover{background:var(--slate-bg);color:var(--navy)}
   .navlinks a.active{background:var(--navy);color:#fff}
@@ -256,7 +254,35 @@
   .navtile .nt-h{font-size:19px;font-weight:800;color:var(--navy);margin:0 0 5px}
   .navtile .nt-s{font-size:13px;color:var(--ink2);margin:0 0 14px;min-height:56px}
   .navtile .nt-go{font-weight:800;font-size:13.5px}
-  @media(max-width:820px){.topnav{flex-direction:column;align-items:stretch;gap:9px;padding:10px 12px}.topnav .brand{font-size:14px;justify-content:center}.navlinks{width:100%;justify-content:space-between;flex-wrap:nowrap;gap:5px}.navlinks a{flex:1;text-align:center;padding:9px 4px;font-size:13px;white-space:nowrap}.deckcta{flex-direction:column;align-items:stretch;gap:12px;padding:18px}.deckcta .thumb{width:100%;height:150px}.deckcta .dc-txt{width:100%}.deckcta .dc-btn{width:100%;justify-content:center}.deckcta .dc-h{font-size:20px}.deckcta .dc-s{max-width:none}}
+  @media(max-width:820px){.topnav{flex-direction:column;align-items:stretch;gap:9px;padding:10px 12px}.topnav .brand{font-size:14px;justify-content:center}.navlinks{width:100%;justify-content:space-between;flex-wrap:nowrap;gap:5px}.navlinks{overflow-x:auto;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navlinks a{flex:0 0 auto;padding:8px 12px;font-size:12.5px;white-space:nowrap}.deckcta{flex-direction:column;align-items:stretch;gap:12px;padding:18px}.deckcta .thumb{width:100%;height:150px}.deckcta .dc-txt{width:100%}.deckcta .dc-btn{width:100%;justify-content:center}.deckcta .dc-h{font-size:20px}.deckcta .dc-s{max-width:none}}
+
+
+  /* shared tab components */
+  .v-steerco{--accent:#00bceb;--accent-d:#049fd9;--accent-bg:#e2f6fd;--glow:rgba(0,188,235,.32)}
+  .v-functions{--accent:#fd7a2b;--accent-d:#e05a00;--accent-bg:#fdeede;--glow:rgba(253,122,43,.4)}
+  .v-pipeline{--accent:#fd1875;--accent-d:#d80f5f;--accent-bg:#fde4ee;--glow:rgba(253,24,117,.4)}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
+  .stack{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+  .p-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
+  .p-title{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .p-when{font-size:12px;color:var(--slate);font-weight:700;white-space:nowrap}
+  .vtag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:6px;white-space:nowrap}
+  .vtag.g{background:#e7f6ef;color:#12805c}.vtag.a{background:#fdf1de;color:#b45309}.vtag.r{background:#fdecea;color:#c0392b}.vtag.n{background:var(--slate-bg);color:var(--ink2)}
+  .kv{font-size:12.5px;color:var(--ink2);margin:3px 0}.kv b{color:var(--navy);font-weight:700}
+  .lbl2{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);margin:12px 0 4px}
+  .ul{margin:0;padding-left:18px} .ul li{font-size:12.5px;color:var(--ink2);margin:3px 0}
+  .raise{background:var(--accent-bg);border-radius:10px;padding:11px 13px;margin-top:12px}
+  .raise .rh{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-d);margin-bottom:4px}
+  .raise .ul li{color:var(--ink)}
+  .p-people{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .chipp{font-size:11px;font-weight:600;background:var(--slate-bg);color:var(--ink2);border-radius:999px;padding:4px 10px}
+  .pbtn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .pbtn.ghost{background:var(--accent-bg);color:var(--accent-d)}
+  .summ{display:flex;gap:12px;flex-wrap:wrap;margin:2px 0 4px}
+  .summ .s{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+  .summ .s .n{font-size:22px;font-weight:800;color:var(--navy)}
+  .summ .s .t{font-size:11.5px;color:var(--ink2)}
 
 </style>
 </head>
@@ -273,6 +299,9 @@
       <a data-nav="home" href="#home">Overview</a>
       <a data-nav="deals" href="#deals">Deals</a>
       <a data-nav="board" href="#board">Board</a>
+      <a data-nav="steerco" href="#steerco">SteerCo</a>
+      <a data-nav="functions" href="#functions">Functions</a>
+      <a data-nav="pipeline" href="#pipeline">Pipeline</a>
       <a data-nav="lessons" href="#lessons">Lessons</a>
     </div>
   </nav>
@@ -446,6 +475,185 @@
 
 
   <!-- ============ ASTRIX ============ -->
+
+  <section id="view-steerco" class="view v-steerco">
+    <a class="backlink" href="#home">&larr; Overview</a>
+    <header><div class="hbody">
+      <div class="eyebrow">Governance</div>
+      <h1>SteerCo</h1>
+      <p>Everything you need for upcoming steering committees — decisions on the table, who from your team is leading, who's in the room, and the deck.</p>
+    </div></header>
+    <div class="summ">
+      <div class="s"><div class="n">4</div><div class="t">SteerCos in the next 4 weeks</div></div>
+      <div class="s"><div class="n">Aug 5</div><div class="t">Next: Integration SteerCo</div></div>
+      <div class="s"><div class="n">1</div><div class="t">Flagged at risk (WideField close)</div></div>
+      <div class="s"><div class="n">10</div><div class="t">Decisions pending across all</div></div>
+    </div>
+    <h2 class="sec">Upcoming steering committees</h2>
+    <div class="stack">
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Integration SteerCo — all three deals</div><span class="vtag a">Prep in progress</span></div>
+        <div class="kv"><b>Tue Aug 5 · 60 min</b> &nbsp;·&nbsp; SVP/GM, Security (chair)</div>
+        <div class="kv" style="color:var(--accent-d);font-weight:700">Your lead: Integration PMO Director</div>
+        <div class="lbl2">Decisions to be made</div>
+        <ul class="ul"><li>Approve out-of-cycle retention funding (WideField &amp; Galileo)</li><li>Endorse the single agentic trust-layer architecture &amp; GTM narrative</li><li>Approve WideField Day-1 integration plan</li></ul>
+        <div class="lbl2">On the SteerCo</div>
+        <div class="p-people"><span class="chipp">SVP Security</span><span class="chipp">SVP/GM Splunk</span><span class="chipp">CHRO</span><span class="chipp">CFO delegate</span><span class="chipp">VP Corp Dev</span><span class="chipp">CISO</span></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center"><button class="pbtn" onclick="deckOpen()">&#9654; Open deck</button><span class="kv" style="margin:0">Deck: Board IMO Status Pack</span></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">WideField Close SteerCo</div><span class="vtag r">Close date at risk</span></div>
+        <div class="kv"><b>Tue Aug 12 · 45 min</b> &nbsp;·&nbsp; VP Corp Dev (chair)</div>
+        <div class="kv" style="color:var(--accent-d);font-weight:700">Your lead: Deal Lead, Corp Dev</div>
+        <div class="lbl2">Decisions to be made</div>
+        <ul class="ul"><li>Confirm target close date &amp; gating items</li><li>Approve TSA scope &amp; Day-1 cutover</li><li>Sign key-employee retention grants</li></ul>
+        <div class="lbl2">On the SteerCo</div>
+        <div class="p-people"><span class="chipp">VP Corp Dev</span><span class="chipp">General Counsel</span><span class="chipp">VP Finance</span><span class="chipp">Security BU lead</span><span class="chipp">Integration PMO</span></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center"><button class="pbtn ghost" title="Draft in preparation">Close readiness pack · in prep</button><span class="kv" style="margin:0">Deck: Close readiness pack</span></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Talent &amp; Retention SteerCo</div><span class="vtag a">Awaiting budget sign-off</span></div>
+        <div class="kv"><b>Tue Aug 19 · 45 min</b> &nbsp;·&nbsp; CHRO (chair)</div>
+        <div class="kv" style="color:var(--accent-d);font-weight:700">Your lead: HR M&amp;A Lead</div>
+        <div class="lbl2">Decisions to be made</div>
+        <ul class="ul"><li>Approve out-of-cycle grants for Galileo &amp; WideField</li><li>Confirm combined-team org design</li><li>Prioritize the top-20 flight-risk roles</li></ul>
+        <div class="lbl2">On the SteerCo</div>
+        <div class="p-people"><span class="chipp">CHRO</span><span class="chipp">BU GMs</span><span class="chipp">Total Rewards</span><span class="chipp">Integration PMO</span></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center"><button class="pbtn ghost" title="Draft in preparation">Retention &amp; org-design dashboard · in prep</button><span class="kv" style="margin:0">Deck: Retention &amp; org-design dashboard</span></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Product &amp; Platform SteerCo</div><span class="vtag g">On track</span></div>
+        <div class="kv"><b>Tue Aug 26 · 60 min</b> &nbsp;·&nbsp; VP Product, Security (chair)</div>
+        <div class="kv" style="color:var(--accent-d);font-weight:700">Your lead: Product Integration Lead</div>
+        <div class="lbl2">Decisions to be made</div>
+        <ul class="ul"><li>Sequence GA milestones across Identity Intelligence &amp; Splunk</li><li>Approve data-contract ownership model</li><li>Confirm ADLC instrumentation scope (Galileo)</li></ul>
+        <div class="lbl2">On the SteerCo</div>
+        <div class="p-people"><span class="chipp">VP Product</span><span class="chipp">SVP Splunk</span><span class="chipp">Data Platform lead</span><span class="chipp">Detection Eng lead</span></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center"><button class="pbtn ghost" title="Draft in preparation">Roadmap &amp; GA milestones · in prep</button><span class="kv" style="margin:0">Deck: Roadmap &amp; GA milestones</span></div>
+      </div>
+    </div>
+    <footer><div class="note">Illustrative operating view — meeting dates, attendees and team leads are placeholders for you to edit. The Integration SteerCo deck links to the board IMO status pack.</div></footer>
+  </section>
+
+  <section id="view-functions" class="view v-functions">
+    <a class="backlink" href="#home">&larr; Overview</a>
+    <header><div class="hbody">
+      <div class="eyebrow">Team pulse</div>
+      <h1>Functions</h1>
+      <p>A pulse on each function's integration work — and exactly what to raise with the functional leader at your next 1:1.</p>
+    </div></header>
+    <div class="summ">
+      <div class="s"><div class="n">8</div><div class="t">Functions tracked</div></div>
+      <div class="s"><div class="n">1</div><div class="t">Needs attention (Corp Dev / Legal)</div></div>
+      <div class="s"><div class="n">4</div><div class="t">On watch</div></div>
+      <div class="s"><div class="n">3</div><div class="t">Healthy</div></div>
+    </div>
+    <h2 class="sec">Function-by-function</h2>
+    <div class="grid2">
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Product &amp; Technology</div><div class="kv" style="margin-top:2px">VP Product, Security &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Thu</span></div></div><span class="vtag a">Watch</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Identity Intelligence integration pod forming for Astrix</li><li>Galileo evals landing in Splunk Observability</li><li>ADLC instrumentation roadmap in draft</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Lock GA milestone dates across the three integrations</li><li>Resolve engineering resource contention</li><li>Decide data-contract ownership</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Splunk (Platform)</div><div class="kv" style="margin-top:2px">SVP/GM, Splunk &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Mon</span></div></div><span class="vtag g">Healthy</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Agentic SOC pod standing up</li><li>WideField telemetry pipeline being designed</li><li>Data Fabric identity enrichment scoped</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close is the key dependency — sequence work around it</li><li>Confirm SOC detection content-pack timeline</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Security BU</div><div class="kv" style="margin-top:2px">SVP/GM, Security &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Wed</span></div></div><span class="vtag g">Healthy</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Astrix folding into Identity Intelligence &amp; Duo</li><li>Zero-trust-for-agents GTM narrative forming</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Own the cross-deal trust-layer architecture</li><li>Align competitor positioning vs Palo Alto / CrowdStrike</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Go-to-Market / Sales</div><div class="kv" style="margin-top:2px">Chief Revenue Officer &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Thu</span></div></div><span class="vtag a">Watch</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Field enablement kit being drafted</li><li>Unified trust-layer pitch in review</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField GTM is blocked on close — set a trigger plan</li><li>Agree quota / comp treatment for new SKUs</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Customer Success</div><div class="kv" style="margin-top:2px">SVP, Customer Experience &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Tue</span></div></div><span class="vtag g">Healthy</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Continuity comms sent to Astrix &amp; Galileo bases</li><li>Exec 1:1s underway with top accounts</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Review at-risk / renewal-exposed accounts</li><li>Prep WideField customer comms for close</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">People / HR</div><div class="kv" style="margin-top:2px">CHRO &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Fri</span></div></div><span class="vtag a">Watch</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Retention packages in flight</li><li>Combined-team org design in progress</li><li>Culture integration plan drafting</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Galileo &amp; WideField flight risk is high — approve retention budget</li><li>Confirm org-design decisions &amp; leveling</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Corp Dev / Legal</div><div class="kv" style="margin-top:2px">SVP, Corporate Development &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Mon</span></div></div><span class="vtag r">Needs attention</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Driving WideField to close</li><li>Diligence closeout on Astrix &amp; Galileo</li><li>Monitoring regulatory / acqui-hire scrutiny</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>WideField close timeline &amp; gating risks</li><li>Confirm TSA scope and legal-entity plan</li></ul></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div><div class="p-title">Finance</div><div class="kv" style="margin-top:2px">CFO delegate / VP Finance &nbsp;·&nbsp; <span style="color:var(--accent-d);font-weight:700">Next 1:1: Wed</span></div></div><span class="vtag a">Watch</span></div>
+        <div class="lbl2">What's happening</div>
+        <ul class="ul"><li>Synergy baselines being set</li><li>Integration budget tracking stood up</li></ul>
+        <div class="raise"><div class="rh">Raise at your next 1:1</div><ul class="ul"><li>Sign off synergy baselines at close</li><li>Agree value-capture reporting cadence</li></ul></div>
+      </div>
+    </div>
+    <footer><div class="note">Illustrative operating view — leaders, cadences and status are placeholders for you to edit. Structured around the standard integration workstreams.</div></footer>
+  </section>
+
+  <section id="view-pipeline" class="view v-pipeline">
+    <a class="backlink" href="#home">&larr; Overview</a>
+    <header><div class="hbody">
+      <div class="eyebrow">Forward look · public information</div>
+      <h1>Pipeline</h1>
+      <p>Where analysts see Cisco's next moves — the gaps, the candidate companies, how likely a deal looks, and what each would mean for the integration team.</p>
+    </div></header>
+    <div class="panel" style="margin-bottom:16px;background:var(--navy);color:#fff;border:none">
+      <div class="lbl2" style="color:#8fd6f4">Market context</div>
+      <div style="font-size:14px;color:#e6eef8">Cybersecurity M&amp;A is reaccelerating in 2026 as platform consolidation, AI disruption and hyperscaler appetite collide — with Cisco/Splunk and Google/Wiz resetting the deal calculus. Cisco frames deals in three buckets: <b style="color:#fff">market acceleration</b>, <b style="color:#fff">market expansion</b>, and <b style="color:#fff">new-market entry</b>.</div>
+    </div>
+    <h2 class="sec">Gaps &amp; candidate targets</h2>
+    <div class="grid2">
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Security hyperautomation (SOAR)</div><span class="vtag a">Likelihood: Medium&ndash;High</span></div>
+        <div class="kv"><b>Analyst-cited candidate:</b> Torq</div>
+        <p class="lwhat" style="font-size:13px;color:var(--ink2);margin:8px 0 0">SOC teams are buying no-code security orchestration. Torq competes with Palo Alto's XSOAR and CrowdStrike's Fusion, and analysts name Cisco a likely buyer to complement Splunk SOAR.</p>
+        <div class="raise"><div class="rh">Integration team should consider</div><ul class="ul"><li>Slots directly into the Splunk-led SOC</li><li>Watch overlap with existing Splunk SOAR</li><li>Absorb connector ecosystem + automation talent</li></ul></div>
+        <div class="lsrc" style="font-size:10.5px;color:var(--slate);margin-top:10px">Source: <a href="https://247wallst.com/investing/2026/05/12/5-cybersecurity-stocks-that-may-be-acquired-in-2026s-ma-wave/">24/7 Wall St.</a> · <a href="https://pitchgrade.com/research/cybersecurity-ma-landscape-2026">PitchGrade</a></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Data Security Posture Management (DSPM)</div><span class="vtag a">Likelihood: Medium</span></div>
+        <div class="kv"><b>Analyst-cited candidate:</b> Cyera (strongest traction)</div>
+        <p class="lwhat" style="font-size:13px;color:var(--ink2);margin:8px 0 0">Cloud data sprawl created DSPM as a net-new category; Cisco has no native DSPM. Cyera has the strongest enterprise traction, but Palo Alto, CrowdStrike and Rubrik are also circling — expect a rich, contested price.</p>
+        <div class="raise"><div class="rh">Integration team should consider</div><ul class="ul"><li>Data classification would feed Cisco Data Fabric &amp; Splunk</li><li>Large-deal integration load</li><li>Overlaps emerging data-governance efforts</li></ul></div>
+        <div class="lsrc" style="font-size:10.5px;color:var(--slate);margin-top:10px">Source: <a href="https://pitchgrade.com/research/cybersecurity-ma-landscape-2026">PitchGrade</a></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">AI runtime &amp; model security</div><span class="vtag n">Likelihood: Ongoing</span></div>
+        <div class="kv"><b>Analyst-cited candidate:</b> Category white-space (tuck-ins)</div>
+        <p class="lwhat" style="font-size:13px;color:var(--ink2);margin:8px 0 0">The agentic era keeps expanding the attack surface. Cisco already holds Robust Intelligence, AI Defense, Galileo, Astrix and WideField — analysts expect continued small tuck-ins (MCP gateways, prompt/runtime security) rather than one mega-deal.</p>
+        <div class="raise"><div class="rh">Integration team should consider</div><ul class="ul"><li>Fold into AI Defense &amp; the trust layer</li><li>Smaller teams = faster integration</li><li>Reinforces, doesn't reshape, the portfolio</li></ul></div>
+        <div class="lsrc" style="font-size:10.5px;color:var(--slate);margin-top:10px">Source: <a href="https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m02/cisco-redefines-security-for-the-agentic-era.html">Cisco Newsroom</a> · <a href="https://www.securityweek.com/cybersecurity-ma-roundup-26-deals-announced-in-may-2026/">SecurityWeek</a></div>
+      </div>
+      <div class="panel">
+        <div class="p-head"><div class="p-title">Cloud-native app security (CNAPP)</div><span class="vtag r">Likelihood: Low&ndash;Medium</span></div>
+        <div class="kv"><b>Analyst-cited candidate:</b> Category (post-Wiz market)</div>
+        <p class="lwhat" style="font-size:13px;color:var(--ink2);margin:8px 0 0">Platform consolidation is fierce and Google's move on Wiz reset valuations. Cisco is strengthening Security Cloud, but a deep CNAPP buy would be expensive and overlaps Hypershield — a build-vs-buy tension.</p>
+        <div class="raise"><div class="rh">Integration team should consider</div><ul class="ul"><li>Heavy platform integration effort</li><li>Build-vs-buy tension with Hypershield</li><li>Crowded, high-multiple space post-Wiz</li></ul></div>
+        <div class="lsrc" style="font-size:10.5px;color:var(--slate);margin-top:10px">Source: <a href="https://www.securityweek.com/cybersecurity-ma-roundup-26-deals-announced-in-may-2026/">SecurityWeek</a> · <a href="https://finance.yahoo.com/markets/stocks/articles/cisco-bets-portfolio-reignite-security-183200315.html">Yahoo Finance</a></div>
+      </div>
+    </div>
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://247wallst.com/investing/2026/05/12/5-cybersecurity-stocks-that-may-be-acquired-in-2026s-ma-wave/">24/7 Wall St.</a> ·
+      <a href="https://pitchgrade.com/research/cybersecurity-ma-landscape-2026">PitchGrade</a> ·
+      <a href="https://www.securityweek.com/cybersecurity-ma-roundup-26-deals-announced-in-may-2026/">SecurityWeek</a> ·
+      <a href="https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m02/cisco-redefines-security-for-the-agentic-era.html">Cisco Newsroom</a>
+      <div class="note">Synthesis of public analyst commentary — <b>not Cisco plans, predictions, or inside information</b>. Company mentions are illustrative and cited where analyst-flagged; likelihood is an illustrative reading of public signals.</div>
+    </footer>
+  </section>
+
   <section id="view-astrix" class="view v-astrix">
     <a class="backlink" href="#deals">← Deals</a>
     <header>
@@ -466,8 +674,8 @@
     </div>
     <h2 class="sec">The gap this deal closes (Cisco AI Readiness Index)</h2>
     <div class="kpis">
-      <div class="kpi alert"><div class="big">24%</div><div class="lbl">of orgs can control agent actions with proper guardrails & live monitoring</div><div class="bar"><i style="width:24%"></i></div></div>
-      <div class="kpi alert"><div class="big">31%</div><div class="lbl">feel fully capable of securing their agentic AI systems</div><div class="bar"><i style="width:31%"></i></div></div>
+      <div class="kpi"><div class="big">24%</div><div class="lbl">of orgs can control agent actions with proper guardrails & live monitoring</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">31%</div><div class="lbl">feel fully capable of securing their agentic AI systems</div><div class="bar"><i style="width:100%"></i></div></div>
       <div class="kpi"><div class="big">4</div><div class="lbl">core Astrix capabilities: Discovery/Governance, Lifecycle, Threat Detection, Secrets</div><div class="bar"><i style="width:100%"></i></div></div>
       <div class="kpi"><div class="big">3</div><div class="lbl">Cisco surfaces to integrate: Identity Intelligence, Secure Access, Duo IAM (+ Splunk/SIEM)</div><div class="bar"><i style="width:100%"></i></div></div>
     </div>
@@ -755,10 +963,10 @@ function initDashboard(key){
 
 // hash router
 function route(){
-  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal','#lessons':'view-lessons','#deals':'view-deals','#board':'view-board'};
+  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal','#lessons':'view-lessons','#deals':'view-deals','#board':'view-board','#steerco':'view-steerco','#functions':'view-functions','#pipeline':'view-pipeline'};
   const id = map[location.hash] || 'view-home';
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===id));
-  const grp={'view-home':'home','view-deals':'deals','view-astrix':'deals','view-wf':'deals','view-gal':'deals','view-board':'board','view-lessons':'lessons'}[id]||'home';
+  const grp={'view-home':'home','view-deals':'deals','view-astrix':'deals','view-wf':'deals','view-gal':'deals','view-board':'board','view-lessons':'lessons','view-steerco':'steerco','view-functions':'functions','view-pipeline':'pipeline'}[id]||'home';
   document.querySelectorAll('.navlinks a').forEach(a=>a.classList.toggle('active',a.dataset.nav===grp));
   window.scrollTo(0,0);
 }

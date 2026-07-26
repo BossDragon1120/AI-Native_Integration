@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Recommendations — Cisco × Astrix Integration</title>
+<style>
+  :root{
+    --ink:#0b1f33; --ink2:#3a5169; --line:#e2e8f0; --bg:#f4f7fb; --card:#ffffff;
+    --blue:#1ba0e2; --blue-d:#0d6efd; --navy:#0d274d; --navy2:#153e75;
+    --green:#12805c; --green-bg:#e7f6ef; --amber:#b45309; --amber-bg:#fdf1de;
+    --red:#c0392b; --red-bg:#fdecea; --slate:#64748b; --slate-bg:#eef2f7;
+    --shadow:0 1px 3px rgba(13,39,77,.08),0 8px 24px rgba(13,39,77,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1160px;margin:0 auto;padding:28px 22px 64px}
+
+  /* header */
+  header{background:linear-gradient(120deg,var(--navy) 0%,var(--navy2) 55%,#1f5aa3 100%);
+    border-radius:18px;padding:26px 30px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(27,160,226,.35),transparent 70%);border-radius:50%}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9fd4f2;font-weight:700}
+  header h1{margin:6px 0 4px;font-size:30px;font-weight:800;letter-spacing:-.02em}
+  header p{margin:0;color:#cfe0f1;font-size:15px;max-width:720px}
+  .updated{position:absolute;right:26px;bottom:20px;font-size:12px;color:#9fd4f2;z-index:2}
+
+  /* deal snapshot */
+  .snap{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:18px 0 22px}
+  .snap .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+  .snap .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);font-weight:700}
+  .snap .v{font-size:19px;font-weight:800;margin-top:3px;color:var(--navy)}
+  .snap .s{font-size:11px;color:var(--ink2);margin-top:1px}
+
+  /* section titles */
+  h2.sec{font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink2);
+    margin:26px 0 12px;font-weight:800;display:flex;align-items:center;gap:9px}
+  h2.sec::before{content:"";width:5px;height:18px;background:var(--blue);border-radius:3px}
+
+  /* readiness / KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .big{font-size:34px;font-weight:800;color:var(--navy);line-height:1}
+  .kpi .lbl{font-size:13px;color:var(--ink2);margin-top:6px}
+  .kpi .bar{height:7px;background:var(--slate-bg);border-radius:6px;margin-top:12px;overflow:hidden}
+  .kpi .bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blue-d))}
+  .kpi.alert .big{color:var(--red)}
+  .kpi.alert .bar>i{background:linear-gradient(90deg,#e67e22,var(--red))}
+
+  /* progress strip */
+  .progwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .progwrap .t{font-weight:800;color:var(--navy);font-size:15px}
+  .progbar{flex:1;min-width:220px;height:12px;background:var(--slate-bg);border-radius:8px;overflow:hidden}
+  .progbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#1fae83);transition:width .4s ease}
+  .progpct{font-weight:800;color:var(--green);font-size:16px;min-width:52px;text-align:right}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;
+    padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;user-select:none}
+  .chip:hover{border-color:var(--blue)}
+  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  /* recommendation cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+  .rec{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--slate);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
+  .rec.p-critical{border-left-color:var(--red)}
+  .rec.p-high{border-left-color:var(--amber)}
+  .rec.p-med{border-left-color:var(--blue)}
+  .rec.done{opacity:.55}
+  .rec.done .rec-title{text-decoration:line-through}
+  .rec-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .b{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:6px}
+  .b.critical{background:var(--red-bg);color:var(--red)}
+  .b.high{background:var(--amber-bg);color:var(--amber)}
+  .b.med{background:#e6f4fb;color:var(--blue-d)}
+  .b.ws{background:var(--slate-bg);color:var(--ink2)}
+  .rec-title{font-size:16.5px;font-weight:800;margin:10px 0 6px;color:var(--navy);letter-spacing:-.01em}
+  .rec .why{font-size:13.5px;color:var(--ink2);margin:0 0 12px}
+  .action{background:#f7fafd;border:1px dashed #c9d9ea;border-radius:10px;padding:11px 13px;margin-bottom:12px}
+  .action .h{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-d);margin-bottom:3px}
+  .action .txt{font-size:13.5px;color:var(--ink);font-weight:600}
+  .meta{display:flex;gap:16px;font-size:12px;color:var(--slate);margin-top:auto;flex-wrap:wrap}
+  .meta b{color:var(--ink2);font-weight:700}
+  .rec-foot{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+  .mark{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 13px;font-size:12.5px;
+    font-weight:700;color:var(--green);cursor:pointer;transition:.15s}
+  .mark:hover{background:var(--green-bg);border-color:var(--green)}
+  .rec.done .mark{color:var(--slate)}
+  .impact{font-size:11.5px;color:var(--slate)}
+  .impact b{color:var(--ink2)}
+
+  footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--slate)}
+  footer a{color:var(--blue-d);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .note{font-size:11.5px;color:var(--slate);font-style:italic;margin-top:6px}
+
+  @media(max-width:820px){
+    .snap{grid-template-columns:repeat(2,1fr)} .kpis{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:1fr} header h1{font-size:24px} .updated{position:static;display:block;margin-top:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Cisco Security · M&A Integration Command Center</div>
+    <h1>AI Recommendations</h1>
+    <p>Prioritized, action-oriented next steps for integrating <b>Astrix Security</b> into Cisco Security — built to help leaders make decisions and unblock their teams.</p>
+    <span class="updated">Scenario view · generated Jul 26, 2026</span>
+  </header>
+
+  <!-- DEAL SNAPSHOT -->
+  <div class="snap">
+    <div class="cell"><div class="k">Deal Value</div><div class="v">~$400M</div><div class="s">reported purchase price</div></div>
+    <div class="cell"><div class="k">Announced</div><div class="v">May 4</div><div class="s">intent to acquire, 2026</div></div>
+    <div class="cell"><div class="k">Closed</div><div class="v">Jun 29</div><div class="s">acquisition completed, 2026</div></div>
+    <div class="cell"><div class="k">Target</div><div class="v">Astrix</div><div class="s">Non-Human Identity security</div></div>
+    <div class="cell"><div class="k">Founded</div><div class="v">~2020</div><div class="s">5 yrs · ~$85M raised</div></div>
+    <div class="cell"><div class="k">Backers</div><div class="v">Menlo</div><div class="s">+ Anthropic Anthology Fund</div></div>
+  </div>
+
+  <!-- WHY NOW -->
+  <h2 class="sec">The gap this deal closes (Cisco AI Readiness Index)</h2>
+  <div class="kpis">
+    <div class="kpi alert">
+      <div class="big">24%</div><div class="lbl">of orgs can control agent actions with proper guardrails &amp; live monitoring</div>
+      <div class="bar"><i style="width:24%"></i></div>
+    </div>
+    <div class="kpi alert">
+      <div class="big">31%</div><div class="lbl">feel fully capable of securing their agentic AI systems</div>
+      <div class="bar"><i style="width:31%"></i></div>
+    </div>
+    <div class="kpi">
+      <div class="big">4</div><div class="lbl">core Astrix capabilities to fold in: Discovery/Governance, Lifecycle, Threat Detection, Secrets</div>
+      <div class="bar"><i style="width:100%"></i></div>
+    </div>
+    <div class="kpi">
+      <div class="big">3</div><div class="lbl">Cisco surfaces to integrate into: Identity Intelligence, Secure Access, Duo IAM (+ Splunk/SIEM)</div>
+      <div class="bar"><i style="width:100%"></i></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <h2 class="sec">Integration momentum</h2>
+  <div class="progwrap">
+    <div class="t">Recommended actions completed</div>
+    <div class="progbar"><i id="pbar"></i></div>
+    <div class="progpct" id="ppct">0%</div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <h2 class="sec">Prioritized AI recommendations</h2>
+  <div class="filters" id="filters">
+    <span class="chip on" data-f="all">All</span>
+    <span class="chip" data-f="critical">Critical</span>
+    <span class="chip" data-f="high">High</span>
+    <span class="chip" data-f="Talent">Talent</span>
+    <span class="chip" data-f="Product">Product</span>
+    <span class="chip" data-f="GTM">GTM</span>
+    <span class="chip" data-f="Customer">Customer</span>
+    <span class="chip" data-f="Risk">Risk</span>
+  </div>
+  <div class="cards" id="cards"></div>
+
+  <footer>
+    <b>Sources (public):</b>
+    <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-astrix-security">Cisco Blog — Securing the Agentic Workforce</a> ·
+    <a href="https://www.securityweek.com/cisco-moves-to-acquire-astrix-security-to-tackle-non-human-identity-risks/">SecurityWeek</a> ·
+    <a href="https://www.calcalistech.com/ctechnews/article/dy5obf581">Calcalist (deal value)</a> ·
+    <a href="https://astrix.security/learn/blog/a-new-chapter-astrix-security-is-joining-cisco/">Astrix — A New Chapter</a>
+    <div class="note">Recommendations are an illustrative decision aid synthesized from public announcements. Owners, dates, and impact estimates are suggested placeholders for an integration team to adjust — not Cisco disclosures. Figures reflect Cisco's AI Readiness Index as cited in the acquisition blog.</div>
+  </footer>
+
+</div>
+
+<script>
+const RECS = [
+  { id:'r1', ws:'Talent', prio:'critical',
+    title:'Lock in Astrix leadership & core NHI engineers now',
+    why:'Cisco explicitly called out Astrix\'s "world-class team." In security M&A, the founding team is the asset most at risk in the first 90 days.',
+    action:'Approve and issue retention packages + clear role mandates to founders and top ~20 engineers within 30 days of close.',
+    owner:'CHRO + SBG GM', when:'0–30 days', impact:'Protects the acquired IP & roadmap velocity' },
+
+  { id:'r2', ws:'Product', prio:'critical',
+    title:'Stand up a joint Identity Intelligence integration pod',
+    why:'Astrix\'s value only compounds once its NHI discovery feeds Cisco Identity Intelligence. Delay erodes the deal thesis.',
+    action:'Charter a joint Cisco/Astrix pod with a named GA milestone for NHI signals inside Identity Intelligence.',
+    owner:'VP Product, Security', when:'0–45 days', impact:'Unlocks unified identity visibility' },
+
+  { id:'r3', ws:'Product', prio:'high',
+    title:'Extend NHI controls into Secure Access & Duo IAM',
+    why:'Cisco stated intent to push Astrix capabilities into its zero-trust access stack so customers can discover, authenticate, and authorize agent identities.',
+    action:'Sequence a roadmap: agent discovery → authorization → detect/respond, exposed through Secure Access and Duo.',
+    owner:'Duo + Secure Access leads', when:'30–90 days', impact:'Turns capability into shippable customer value' },
+
+  { id:'r4', ws:'Product', prio:'high',
+    title:'Wire Astrix telemetry into Splunk / any SIEM',
+    why:'The differentiator is context: agent behavior flowing into Splunk/SIEM gives SOCs a unified view to respond at machine speed.',
+    action:'Ship a supported Astrix→Splunk data path and a reference detection content pack for agentic threats.',
+    owner:'Splunk integration team', when:'30–90 days', impact:'Extends value to the entire installed SOC base' },
+
+  { id:'r5', ws:'GTM', prio:'high',
+    title:'Arm the field with the "Zero Trust for agents" story',
+    why:'Only 24% of orgs can guardrail agent actions and 31% feel able to secure agentic AI — a live, quantified buying trigger.',
+    action:'Ship a one-page narrative, demo, and objection-handling kit to sellers; brief top accounts within 60 days.',
+    owner:'Product Marketing + Sales Enablement', when:'0–60 days', impact:'Converts readiness gap into pipeline' },
+
+  { id:'r6', ws:'Customer', prio:'critical',
+    title:'Proactively reassure existing Astrix customers',
+    why:'Acquisition uncertainty is the #1 churn driver for the acquired base. Silence loses customers before Cisco realizes value.',
+    action:'Send a co-signed continuity note (roadmap, support, pricing) and offer 1:1 exec calls to top accounts within 2 weeks.',
+    owner:'Customer Success + SBG GM', when:'0–14 days', impact:'Retains acquired ARR & references' },
+
+  { id:'r7', ws:'GTM', prio:'med',
+    title:'Package a fast "agent security assessment" offer',
+    why:'Most orgs can\'t even see their agents. A low-friction discovery assessment creates urgency and lands the platform.',
+    action:'Launch a free/low-cost NHI + agent discovery assessment via Astrix tooling as a top-of-funnel motion.',
+    owner:'GTM Strategy', when:'45–90 days', impact:'Creates repeatable land motion' },
+
+  { id:'r8', ws:'Risk', prio:'high',
+    title:'Unify secrets management & close compliance items',
+    why:'Astrix brings centralized secrets across vaults/cloud; overlapping tools and open compliance items add integration risk.',
+    action:'Run a 30-day audit to rationalize secrets tooling and close diligence/compliance open items with owners and dates.',
+    owner:'CISO + Integration PMO', when:'0–30 days', impact:'Reduces integration & security risk' },
+
+  { id:'r9', ws:'Product', prio:'med',
+    title:'Publish a public integration roadmap & milestones',
+    why:'A visible roadmap aligns Astrix, Cisco field, and customers on one plan and blunts competitor FUD in the agentic-identity race.',
+    action:'Approve and publish a 2-quarter integration roadmap with 3–4 dated customer-facing milestones.',
+    owner:'Integration PMO', when:'30–60 days', impact:'Aligns teams & pre-empts competitors' },
+
+  { id:'r10', ws:'Talent', prio:'med',
+    title:'Merge into one operating rhythm & escalation path',
+    why:'Two toolchains and two cultures stall without shared rituals. Early operating cadence is where integrations succeed or drift.',
+    action:'Stand up a weekly integration steering review with a single dashboard, named workstream owners, and clear escalation.',
+    owner:'Integration PMO', when:'0–30 days', impact:'Keeps every workstream unblocked' },
+];
+
+const prioMap = {critical:{cls:'p-critical',b:'critical',label:'Critical'},
+                 high:{cls:'p-high',b:'high',label:'High'},
+                 med:{cls:'p-med',b:'med',label:'Medium'}};
+const done = {};
+let filter = 'all';
+
+function matches(r){
+  if(filter==='all') return true;
+  if(filter==='critical'||filter==='high') return r.prio===filter;
+  return r.ws===filter;
+}
+function render(){
+  const c = document.getElementById('cards'); c.innerHTML='';
+  RECS.filter(matches).forEach(r=>{
+    const p = prioMap[r.prio];
+    const el = document.createElement('div');
+    el.className = 'rec '+p.cls+(done[r.id]?' done':'');
+    el.innerHTML = `
+      <div class="rec-top">
+        <div class="badges">
+          <span class="b ${p.b}">${p.label}</span>
+          <span class="b ws">${r.ws}</span>
+        </div>
+      </div>
+      <div class="rec-title">${r.title}</div>
+      <p class="why">${r.why}</p>
+      <div class="action">
+        <div class="h">▸ Recommended action</div>
+        <div class="txt">${r.action}</div>
+      </div>
+      <div class="meta"><span><b>Owner:</b> ${r.owner}</span><span><b>Window:</b> ${r.when}</span></div>
+      <div class="rec-foot">
+        <span class="impact"><b>Impact:</b> ${r.impact}</span>
+        <button class="mark" onclick="toggle('${r.id}')">${done[r.id]?'↩ Reopen':'✓ Mark done'}</button>
+      </div>`;
+    c.appendChild(el);
+  });
+  updateProg();
+}
+function toggle(id){ done[id]=!done[id]; render(); }
+function updateProg(){
+  const total=RECS.length, d=Object.values(done).filter(Boolean).length;
+  const pct=Math.round(d/total*100);
+  document.getElementById('pbar').style.width=pct+'%';
+  document.getElementById('ppct').textContent=pct+'%';
+}
+document.getElementById('filters').addEventListener('click',e=>{
+  if(!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  e.target.classList.add('on'); filter=e.target.dataset.f; render();
+});
+render();
+</script>
+</body>
+</html>

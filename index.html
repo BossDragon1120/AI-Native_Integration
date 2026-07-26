@@ -7,132 +7,480 @@
 <style>
   :root{
     --ink:#0b1f33; --ink2:#3a5169; --line:#e2e8f0; --bg:#f4f7fb; --card:#ffffff;
-    --navy:#0d274d; --navy2:#153e75; --slate:#64748b; --slate-bg:#eef2f7;
-    --blue:#1ba0e2; --blue-d:#0d6efd; --teal:#14b8a6; --teal-d:#0d9488;
-    --green:#12805c; --amber:#b45309; --red:#c0392b;
+    --navy:#0a2540; --navy2:#123a6e; --slate:#64748b; --slate-bg:#eef2f7;
+    --cisco:#00bceb; --cisco-d:#049fd9;
+    --splunk-o:#fd7a2b; --splunk-o-d:#e05a00;
+    --splunk-p:#fd1875; --splunk-p-d:#d80f5f;
+    --splunk:linear-gradient(90deg,#fd1875,#fb4e4d,#fd7a2b,#fe9f14);
+    --green:#12805c; --green-bg:#e7f6ef; --amber:#b45309; --amber-bg:#fdf1de;
+    --red:#c0392b; --red-bg:#fdecea;
     --shadow:0 1px 3px rgba(13,39,77,.08),0 10px 30px rgba(13,39,77,.07);
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1080px;margin:0 auto;padding:34px 22px 64px}
+  .wrap{max-width:1160px;margin:0 auto;padding:34px 22px 64px}
 
-  header{background:linear-gradient(120deg,#0a1e3d 0%,var(--navy) 45%,var(--navy2) 100%);
-    border-radius:20px;padding:34px 36px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
-  header::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;
-    background:radial-gradient(circle,rgba(27,160,226,.35),transparent 70%);border-radius:50%}
-  header::before{content:"";position:absolute;left:-40px;bottom:-80px;width:240px;height:240px;
-    background:radial-gradient(circle,rgba(20,184,166,.25),transparent 70%);border-radius:50%}
-  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9fd4f2;font-weight:700}
-  header h1{margin:8px 0 6px;font-size:32px;font-weight:800;letter-spacing:-.02em;position:relative}
-  header p{margin:0;color:#cfe0f1;font-size:15.5px;max-width:680px;position:relative}
+  /* view routing */
+  .view{display:none}
+  .view.active{display:block}
 
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0 6px}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
-  .kpi .big{font-size:30px;font-weight:800;color:var(--navy);line-height:1}
-  .kpi .lbl{font-size:12.5px;color:var(--ink2);margin-top:6px}
+  /* per-deal accent scope */
+  .v-home{--accent:var(--cisco);--accent-d:var(--cisco-d);--accent-bg:#e2f6fd;--glow:rgba(0,188,235,.32)}
+  .v-astrix{--accent:#00bceb;--accent-d:#049fd9;--accent-bg:#e2f6fd;--glow:rgba(0,188,235,.4)}
+  .v-wf{--accent:#fd7a2b;--accent-d:#e05a00;--accent-bg:#fdeede;--glow:rgba(253,122,43,.42)}
+  .v-gal{--accent:#fd1875;--accent-d:#d80f5f;--accent-bg:#fde4ee;--glow:rgba(253,24,117,.42)}
+
+  .backlink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent-d);
+    text-decoration:none;margin-bottom:14px;cursor:pointer}
+  .backlink:hover{text-decoration:underline}
+  .sband{height:6px;border-radius:6px;background:var(--splunk);margin:0 0 14px}
+
+  /* header */
+  header{background:linear-gradient(120deg,#08213f 0%,var(--navy) 45%,var(--navy2) 100%);
+    border-radius:18px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  header .hbar{height:8px;background:var(--splunk)}
+  header .hbody{padding:26px 30px}
+  header.home .hbody{padding:30px 36px}
+  header::after{content:"";position:absolute;right:-50px;top:-40px;width:250px;height:250px;
+    background:radial-gradient(circle,var(--glow),transparent 70%);border-radius:50%}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fd6f4;font-weight:700}
+  header h1{margin:6px 0 4px;font-size:30px;font-weight:800;letter-spacing:-.02em;position:relative}
+  header.home h1{font-size:32px}
+  header p{margin:0;color:#cfe0f1;font-size:15px;max-width:720px;position:relative}
+  .updated{display:block;font-size:12px;color:#8fd6f4;margin-top:12px}
+
+  /* snapshot */
+  .snap{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:18px 0 22px}
+  .snap .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+  .snap .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);font-weight:700}
+  .snap .v{font-size:19px;font-weight:800;margin-top:3px;color:var(--navy)}
+  .snap .s{font-size:11px;color:var(--ink2);margin-top:1px}
 
   h2.sec{font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink2);
-    margin:30px 0 14px;font-weight:800;display:flex;align-items:center;gap:9px}
-  h2.sec::before{content:"";width:5px;height:18px;background:var(--blue);border-radius:3px}
+    margin:26px 0 12px;font-weight:800;display:flex;align-items:center;gap:9px}
+  h2.sec::before{content:"";width:5px;height:18px;background:var(--accent);border-radius:3px}
 
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  /* kpis */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .big{font-size:26px;font-weight:800;color:var(--navy);line-height:1.1}
+  .kpi .lbl{font-size:12.5px;color:var(--ink2);margin-top:6px}
+  .kpi .bar{height:7px;background:var(--slate-bg);border-radius:6px;margin-top:12px;overflow:hidden}
+  .kpi .bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-d))}
+  .kpi.alert .big{color:var(--red)}
+  .kpi.alert .bar>i{background:linear-gradient(90deg,#e67e22,var(--red))}
+
+  /* progress */
+  .progwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .progwrap .t{font-weight:800;color:var(--navy);font-size:15px}
+  .progbar{flex:1;min-width:220px;height:12px;background:var(--slate-bg);border-radius:8px;overflow:hidden}
+  .progbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#1fae83);transition:width .4s ease}
+  .progpct{font-weight:800;color:var(--green);font-size:16px;min-width:52px;text-align:right}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;
+    padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;user-select:none}
+  .chip:hover{border-color:var(--accent)}
+  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  /* recommendation cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+  .rec{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--slate);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
+  .rec.p-critical{border-left-color:var(--red)}
+  .rec.p-high{border-left-color:var(--amber)}
+  .rec.p-med{border-left-color:var(--accent)}
+  .rec.done{opacity:.55}
+  .rec.done .rec-title{text-decoration:line-through}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .b{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:6px}
+  .b.critical{background:var(--red-bg);color:var(--red)}
+  .b.high{background:var(--amber-bg);color:var(--amber)}
+  .b.med{background:var(--accent-bg);color:var(--accent-d)}
+  .b.ws{background:var(--slate-bg);color:var(--ink2)}
+  .rec-title{font-size:16.5px;font-weight:800;margin:10px 0 6px;color:var(--navy);letter-spacing:-.01em}
+  .rec .why{font-size:13.5px;color:var(--ink2);margin:0 0 12px}
+  .action{background:var(--accent-bg);border:1px dashed var(--accent);border-radius:10px;padding:11px 13px;margin-bottom:12px}
+  .action .h{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-d);margin-bottom:3px}
+  .action .txt{font-size:13.5px;color:var(--ink);font-weight:600}
+  .meta{display:flex;gap:16px;font-size:12px;color:var(--slate);margin-top:auto;flex-wrap:wrap}
+  .meta b{color:var(--ink2);font-weight:700}
+  .rec-foot{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+  .mark{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 13px;font-size:12.5px;
+    font-weight:700;color:var(--green);cursor:pointer;transition:.15s}
+  .mark:hover{background:var(--green-bg);border-color:var(--green)}
+  .rec.done .mark{color:var(--slate)}
+  .impact{font-size:11.5px;color:var(--slate)}
+  .impact b{color:var(--ink2)}
+
+  /* home cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .dcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);
     border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);
-    transition:transform .18s ease,box-shadow .18s ease}
+    transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
   .dcard:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(13,39,77,.16)}
   .dcard .band{height:8px}
-  .dcard.astrix .band{background:linear-gradient(90deg,var(--blue),var(--blue-d))}
-  .dcard.wf .band{background:linear-gradient(90deg,var(--teal),var(--teal-d))}
-  .dcard .body{padding:22px 24px 24px}
-  .dtag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
-    padding:4px 10px;border-radius:999px;margin-bottom:12px}
-  .dcard.astrix .dtag{background:#e6f4fb;color:var(--blue-d)}
-  .dcard.wf .dtag{background:#e0f5f2;color:var(--teal-d)}
-  .dcard h3{margin:0 0 6px;font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
-  .dcard .sub{font-size:13.5px;color:var(--ink2);margin:0 0 16px;min-height:40px}
-  .facts{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:18px}
-  .facts .f .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);font-weight:700}
-  .facts .f .v{font-size:15px;font-weight:800;color:var(--navy);margin-top:2px}
+  .dcard.astrix .band{background:linear-gradient(90deg,var(--cisco),var(--cisco-d))}
+  .dcard.wf .band{background:linear-gradient(90deg,var(--splunk-o),var(--splunk-o-d))}
+  .dcard.gal .band{background:linear-gradient(90deg,var(--splunk-p),var(--splunk-p-d))}
+  .dcard .cbody{padding:20px 22px 22px}
+  .dtag{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+    padding:4px 10px;border-radius:999px;margin-bottom:11px}
+  .dcard.astrix .dtag{background:#e2f6fd;color:var(--cisco-d)}
+  .dcard.wf .dtag{background:#fdeede;color:var(--splunk-o-d)}
+  .dcard.gal .dtag{background:#fde4ee;color:var(--splunk-p-d)}
+  .dcard h3{margin:0 0 6px;font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .dcard .sub{font-size:13px;color:var(--ink2);margin:0 0 15px;min-height:54px}
+  .facts{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:16px}
+  .facts .f .k{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);font-weight:700}
+  .facts .f .v{font-size:14px;font-weight:800;color:var(--navy);margin-top:2px}
   .open{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800}
-  .dcard.astrix .open{color:var(--blue-d)}
-  .dcard.wf .open{color:var(--teal-d)}
+  .dcard.astrix .open{color:var(--cisco-d)}
+  .dcard.wf .open{color:var(--splunk-o-d)}
+  .dcard.gal .open{color:var(--splunk-p-d)}
   .open .arrow{transition:transform .18s ease}
   .dcard:hover .open .arrow{transform:translateX(4px)}
   .pri{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-  .pri span{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--slate-bg);color:var(--ink2)}
+  .pri span{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--slate-bg);color:var(--ink2)}
   .pri .crit{background:#fdecea;color:var(--red)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:16px}
+  .legend .li{display:inline-flex;align-items:center;gap:7px}
+  .legend .sw{width:16px;height:10px;border-radius:3px}
 
-  footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--slate)}
-  footer a{color:var(--blue-d);text-decoration:none}
+  footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--slate)}
+  footer a{color:var(--accent-d);text-decoration:none}
   footer a:hover{text-decoration:underline}
   .note{font-size:11.5px;color:var(--slate);font-style:italic;margin-top:6px}
 
-  @media(max-width:780px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header h1{font-size:25px}}
+  @media(max-width:820px){
+    .snap{grid-template-columns:repeat(2,1fr)} .kpis{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:1fr} .grid{grid-template-columns:1fr} header h1{font-size:24px}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header>
-    <div class="eyebrow">Cisco Security</div>
-    <h1>M&A Integration Command Center</h1>
-    <p>Executive view of Cisco's 2026 agentic-security acquisitions. Open any deal to see prioritized, action-oriented AI recommendations for the integration team.</p>
-  </header>
-
-  <div class="kpis">
-    <div class="kpi"><div class="big">3</div><div class="lbl">Agentic-security acquisitions in 2026 (Astrix, WideField, Galileo)</div></div>
-    <div class="kpi"><div class="big">2</div><div class="lbl">Integrations with live recommendation dashboards</div></div>
-    <div class="kpi"><div class="big">20</div><div class="lbl">Prioritized actions across both integrations</div></div>
-    <div class="kpi"><div class="big">1</div><div class="lbl">Unified agentic trust layer — identity, runtime, visibility, enforcement</div></div>
-  </div>
-
-  <h2 class="sec">Integration dashboards</h2>
-  <div class="grid">
-
-    <a class="dcard astrix" href="astrix-dashboard.html">
-      <div class="band"></div>
-      <div class="body">
-        <span class="dtag">Closed · Jun 29, 2026</span>
-        <h3>Astrix Security</h3>
-        <p class="sub">Non-Human Identity security — securing API keys, service accounts & OAuth tokens agents use.</p>
-        <div class="facts">
-          <div class="f"><div class="k">Deal Value</div><div class="v">~$400M</div></div>
-          <div class="f"><div class="k">Integrates into</div><div class="v">Identity Intelligence · Duo</div></div>
-          <div class="f"><div class="k">Actions</div><div class="v">10</div></div>
-        </div>
-        <div class="pri"><span class="crit">3 Critical</span><span>4 High</span><span>3 Medium</span></div>
-        <span class="open">Open AI Recommendations <span class="arrow">→</span></span>
+  <!-- ============ HOME ============ -->
+  <section id="view-home" class="view v-home active">
+    <header class="home">
+      <div class="hbar"></div>
+      <div class="hbody">
+        <div class="eyebrow">Cisco Security · Splunk</div>
+        <h1>M&A Integration Command Center</h1>
+        <p>Executive view of Cisco's 2026 agentic-security acquisitions. Open any deal for prioritized, action-oriented AI recommendations that help the integration team decide and act.</p>
       </div>
-    </a>
+    </header>
 
-    <a class="dcard wf" href="widefield-dashboard.html">
-      <div class="band"></div>
-      <div class="body">
-        <span class="dtag">Intent · Jun 18, 2026</span>
-        <h3>WideField Security</h3>
-        <p class="sub">Identity lifecycle security — visibility across human, machine & AI identities for Splunk's Agentic SOC.</p>
-        <div class="facts">
-          <div class="f"><div class="k">Deal Value</div><div class="v">Undisclosed</div></div>
-          <div class="f"><div class="k">Integrates into</div><div class="v">Splunk Agentic SOC</div></div>
-          <div class="f"><div class="k">Actions</div><div class="v">10</div></div>
+    <div class="kpis" style="margin:20px 0 6px">
+      <div class="kpi"><div class="big">3</div><div class="lbl">Agentic-security acquisitions in 2026</div></div>
+      <div class="kpi"><div class="big">3</div><div class="lbl">Integrations with live recommendation dashboards</div></div>
+      <div class="kpi"><div class="big">30</div><div class="lbl">Prioritized actions across all three deals</div></div>
+      <div class="kpi"><div class="big">1</div><div class="lbl">Unified agentic trust layer — identity, runtime, observability, enforcement</div></div>
+    </div>
+
+    <h2 class="sec">Integration dashboards</h2>
+    <div class="grid">
+      <a class="dcard astrix" href="#astrix">
+        <div class="band"></div>
+        <div class="cbody">
+          <span class="dtag">Closed · Jun 29, 2026</span>
+          <h3>Astrix Security</h3>
+          <p class="sub">Non-Human Identity security — securing the API keys, service accounts & OAuth tokens that AI agents use.</p>
+          <div class="facts">
+            <div class="f"><div class="k">Deal Value</div><div class="v">~$400M</div></div>
+            <div class="f"><div class="k">Home</div><div class="v">Identity Intelligence · Duo</div></div>
+            <div class="f"><div class="k">Actions</div><div class="v">10</div></div>
+          </div>
+          <div class="pri"><span class="crit">3 Critical</span><span>4 High</span><span>3 Medium</span></div>
+          <span class="open">Open AI Recommendations <span class="arrow">→</span></span>
         </div>
-        <div class="pri"><span class="crit">3 Critical</span><span>4 High</span><span>3 Medium</span></div>
-        <span class="open">Open AI Recommendations <span class="arrow">→</span></span>
+      </a>
+      <a class="dcard wf" href="#wf">
+        <div class="band"></div>
+        <div class="cbody">
+          <span class="dtag">Intent · Jun 18, 2026</span>
+          <h3>WideField Security</h3>
+          <p class="sub">Identity lifecycle security — visibility across human, machine & AI identities for Splunk's Agentic SOC.</p>
+          <div class="facts">
+            <div class="f"><div class="k">Deal Value</div><div class="v">Undisclosed</div></div>
+            <div class="f"><div class="k">Home</div><div class="v">Splunk Agentic SOC</div></div>
+            <div class="f"><div class="k">Actions</div><div class="v">10</div></div>
+          </div>
+          <div class="pri"><span class="crit">3 Critical</span><span>4 High</span><span>3 Medium</span></div>
+          <span class="open">Open AI Recommendations <span class="arrow">→</span></span>
+        </div>
+      </a>
+      <a class="dcard gal" href="#gal">
+        <div class="band"></div>
+        <div class="cbody">
+          <span class="dtag">Closed · May 22, 2026</span>
+          <h3>Galileo</h3>
+          <p class="sub">AI agent observability & evaluation — making AI trustworthy by catching failures before they reach users.</p>
+          <div class="facts">
+            <div class="f"><div class="k">Deal Value</div><div class="v">Undisclosed</div></div>
+            <div class="f"><div class="k">Home</div><div class="v">Splunk Observability</div></div>
+            <div class="f"><div class="k">Actions</div><div class="v">10</div></div>
+          </div>
+          <div class="pri"><span class="crit">2 Critical</span><span>4 High</span><span>4 Medium</span></div>
+          <span class="open">Open AI Recommendations <span class="arrow">→</span></span>
+        </div>
+      </a>
+    </div>
+
+    <div class="legend">
+      <span class="li"><span class="sw" style="background:linear-gradient(90deg,#00bceb,#049fd9)"></span> Cisco blue — Cisco-platform integration</span>
+      <span class="li"><span class="sw" style="background:linear-gradient(90deg,#fd7a2b,#e05a00)"></span> Splunk orange — Splunk Agentic SOC</span>
+      <span class="li"><span class="sw" style="background:linear-gradient(90deg,#fd1875,#d80f5f)"></span> Splunk pink — Splunk Observability</span>
+    </div>
+
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-astrix-security">Cisco Blog — Astrix</a> ·
+      <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-widefield-security">Cisco Blog — WideField</a> ·
+      <a href="https://blogs.cisco.com/news/cisco-announces-the-intent-to-acquire-galileo">Cisco Blog — Galileo</a>
+      <div class="note">Illustrative decision aid built from public announcements. Owners, dates, and impact estimates are suggested placeholders for the integration team to adjust — not Cisco disclosures. Color accents follow Cisco (blue) and Splunk (pink/orange) brand palettes.</div>
+    </footer>
+  </section>
+
+  <!-- ============ ASTRIX ============ -->
+  <section id="view-astrix" class="view v-astrix">
+    <a class="backlink" href="#home">← Integration home</a>
+    <header>
+      <div class="hbody">
+        <div class="eyebrow">Cisco Security · M&A Integration Command Center</div>
+        <h1>AI Recommendations — Astrix Security</h1>
+        <p>Prioritized, action-oriented next steps for integrating <b>Astrix Security</b> into Cisco Security — built to help leaders make decisions and unblock their teams.</p>
+        <span class="updated">Scenario view · generated Jul 26, 2026</span>
       </div>
-    </a>
+    </header>
+    <div class="snap">
+      <div class="cell"><div class="k">Deal Value</div><div class="v">~$400M</div><div class="s">reported purchase price</div></div>
+      <div class="cell"><div class="k">Announced</div><div class="v">May 4</div><div class="s">intent to acquire, 2026</div></div>
+      <div class="cell"><div class="k">Closed</div><div class="v">Jun 29</div><div class="s">acquisition completed, 2026</div></div>
+      <div class="cell"><div class="k">Target</div><div class="v">Astrix</div><div class="s">Non-Human Identity security</div></div>
+      <div class="cell"><div class="k">Founded</div><div class="v">~2020</div><div class="s">5 yrs · ~$85M raised</div></div>
+      <div class="cell"><div class="k">Backers</div><div class="v">Menlo</div><div class="s">+ Anthropic Anthology Fund</div></div>
+    </div>
+    <h2 class="sec">The gap this deal closes (Cisco AI Readiness Index)</h2>
+    <div class="kpis">
+      <div class="kpi alert"><div class="big">24%</div><div class="lbl">of orgs can control agent actions with proper guardrails & live monitoring</div><div class="bar"><i style="width:24%"></i></div></div>
+      <div class="kpi alert"><div class="big">31%</div><div class="lbl">feel fully capable of securing their agentic AI systems</div><div class="bar"><i style="width:31%"></i></div></div>
+      <div class="kpi"><div class="big">4</div><div class="lbl">core Astrix capabilities: Discovery/Governance, Lifecycle, Threat Detection, Secrets</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">3</div><div class="lbl">Cisco surfaces to integrate: Identity Intelligence, Secure Access, Duo IAM (+ Splunk/SIEM)</div><div class="bar"><i style="width:100%"></i></div></div>
+    </div>
+    <h2 class="sec">Integration momentum</h2>
+    <div class="progwrap"><div class="t">Recommended actions completed</div><div class="progbar"><i id="pbar-astrix"></i></div><div class="progpct" id="ppct-astrix">0%</div></div>
+    <h2 class="sec">Prioritized AI recommendations</h2>
+    <div class="filters" id="filters-astrix">
+      <span class="chip on" data-f="all">All</span><span class="chip" data-f="critical">Critical</span><span class="chip" data-f="high">High</span>
+      <span class="chip" data-f="Talent">Talent</span><span class="chip" data-f="Product">Product</span><span class="chip" data-f="GTM">GTM</span>
+      <span class="chip" data-f="Customer">Customer</span><span class="chip" data-f="Risk">Risk</span>
+    </div>
+    <div class="cards" id="cards-astrix"></div>
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-astrix-security">Cisco Blog — Astrix</a> ·
+      <a href="https://www.securityweek.com/cisco-moves-to-acquire-astrix-security-to-tackle-non-human-identity-risks/">SecurityWeek</a> ·
+      <a href="https://www.calcalistech.com/ctechnews/article/dy5obf581">Calcalist (deal value)</a>
+      <div class="note">Illustrative decision aid. Owners, dates, and impact estimates are suggested placeholders — not Cisco disclosures. Readiness figures reflect Cisco's AI Readiness Index as cited in the acquisition blog.</div>
+    </footer>
+  </section>
 
-  </div>
+  <!-- ============ WIDEFIELD ============ -->
+  <section id="view-wf" class="view v-wf">
+    <a class="backlink" href="#home">← Integration home</a>
+    <div class="sband" title="Splunk-bound integration"></div>
+    <header>
+      <div class="hbody">
+        <div class="eyebrow">Cisco Security · Splunk · M&A Integration Command Center</div>
+        <h1>AI Recommendations — WideField Security</h1>
+        <p>Prioritized, action-oriented next steps for integrating <b>WideField Security</b> into Splunk's Agentic SOC — built to help leaders make decisions and unblock their teams.</p>
+        <span class="updated">Scenario view · generated Jul 26, 2026</span>
+      </div>
+    </header>
+    <div class="snap">
+      <div class="cell"><div class="k">Deal Value</div><div class="v">Undisclosed</div><div class="s">not publicly stated</div></div>
+      <div class="cell"><div class="k">Announced</div><div class="v">Jun 18</div><div class="s">intent to acquire, 2026</div></div>
+      <div class="cell"><div class="k">Status</div><div class="v">Pending</div><div class="s">intent / integration planning</div></div>
+      <div class="cell"><div class="k">Target</div><div class="v">WideField</div><div class="s">Identity lifecycle security</div></div>
+      <div class="cell"><div class="k">Funding</div><div class="v">$11M+</div><div class="s">Series A (prior year)</div></div>
+      <div class="cell"><div class="k">Home</div><div class="v">Splunk</div><div class="s">Agentic SOC · a Cisco company</div></div>
+    </div>
+    <h2 class="sec">Why this deal — the three challenges it targets</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="big">Protect agents from the world</div><div class="lbl">Guardrails so agents can't be manipulated or exploited by bad actors</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">Protect the world from agents</div><div class="lbl">Keep agents known, accountable, and least-privilege in their actions</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">Detect & respond at machine speed</div><div class="lbl">Contain misaligned or compromised agents before humans can react</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">3 identity types</div><div class="lbl">Unified visibility across <b>human, machine, and AI</b> identities — WideField's core scope</div><div class="bar"><i style="width:100%"></i></div></div>
+    </div>
+    <h2 class="sec">Integration momentum</h2>
+    <div class="progwrap"><div class="t">Recommended actions completed</div><div class="progbar"><i id="pbar-wf"></i></div><div class="progpct" id="ppct-wf">0%</div></div>
+    <h2 class="sec">Prioritized AI recommendations</h2>
+    <div class="filters" id="filters-wf">
+      <span class="chip on" data-f="all">All</span><span class="chip" data-f="critical">Critical</span><span class="chip" data-f="high">High</span>
+      <span class="chip" data-f="Talent">Talent</span><span class="chip" data-f="Product">Product</span><span class="chip" data-f="GTM">GTM</span>
+      <span class="chip" data-f="Customer">Customer</span><span class="chip" data-f="Risk">Risk</span>
+    </div>
+    <div class="cards" id="cards-wf"></div>
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-widefield-security">Cisco Blog — WideField</a> ·
+      <a href="https://www.securityweek.com/cisco-to-acquire-widefield-security-to-boost-splunks-agentic-soc/">SecurityWeek</a> ·
+      <a href="https://fintech.global/2026/06/22/cisco-targets-agentic-ai-risk-with-widefield-buy/">FinTech Global</a>
+      <div class="note">Illustrative decision aid. Owners, dates, and impact estimates are suggested placeholders — not Cisco disclosures. Deal terms were not publicly disclosed; status shown as pending confirmation of close.</div>
+    </footer>
+  </section>
 
-  <footer>
-    <b>Sources (public):</b>
-    <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-astrix-security">Cisco Blog — Astrix</a> ·
-    <a href="https://blogs.cisco.com/news/cisco-announces-intent-to-acquire-widefield-security">Cisco Blog — WideField</a> ·
-    <a href="https://www.securityweek.com/cisco-moves-to-acquire-astrix-security-to-tackle-non-human-identity-risks/">SecurityWeek (Astrix)</a> ·
-    <a href="https://www.securityweek.com/cisco-to-acquire-widefield-security-to-boost-splunks-agentic-soc/">SecurityWeek (WideField)</a>
-    <div class="note">Illustrative decision aid built from public announcements. Owners, dates, and impact estimates in each dashboard are suggested placeholders for the integration team to adjust — not Cisco disclosures.</div>
-  </footer>
+  <!-- ============ GALILEO ============ -->
+  <section id="view-gal" class="view v-gal">
+    <a class="backlink" href="#home">← Integration home</a>
+    <div class="sband" title="Splunk-bound integration"></div>
+    <header>
+      <div class="hbody">
+        <div class="eyebrow">Cisco Security · Splunk · M&A Integration Command Center</div>
+        <h1>AI Recommendations — Galileo</h1>
+        <p>Prioritized, action-oriented next steps for integrating <b>Galileo</b> into Splunk Observability Cloud — built to help leaders make decisions and unblock their teams.</p>
+        <span class="updated">Scenario view · generated Jul 26, 2026</span>
+      </div>
+    </header>
+    <div class="snap">
+      <div class="cell"><div class="k">Deal Value</div><div class="v">Undisclosed</div><div class="s">not publicly stated</div></div>
+      <div class="cell"><div class="k">Announced</div><div class="v">Apr 9</div><div class="s">intent to acquire, 2026</div></div>
+      <div class="cell"><div class="k">Closed</div><div class="v">May 22</div><div class="s">acquisition completed, 2026</div></div>
+      <div class="cell"><div class="k">Target</div><div class="v">Galileo</div><div class="s">AI agent observability</div></div>
+      <div class="cell"><div class="k">Focus</div><div class="v">AI Trust</div><div class="s">quality · evals · guardrails</div></div>
+      <div class="cell"><div class="k">Home</div><div class="v">Splunk</div><div class="s">Observability Cloud</div></div>
+    </div>
+    <h2 class="sec">Why this deal — trustworthy, observable AI</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="big">Full ADLC coverage</div><div class="lbl">One instrumentation layer from prompt optimization & model selection to production monitoring & guardrails</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">Catch failures before users</div><div class="lbl">Detect AI failures in production before they ever reach customers</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">Trust by design</div><div class="lbl">Evaluate AI quality and continuously improve agent behavior in production</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="kpi"><div class="big">Extends Splunk AI Agent Monitoring</div><div class="lbl">Adds evaluation & guardrails to Splunk Observability Cloud</div><div class="bar"><i style="width:100%"></i></div></div>
+    </div>
+    <h2 class="sec">Integration momentum</h2>
+    <div class="progwrap"><div class="t">Recommended actions completed</div><div class="progbar"><i id="pbar-gal"></i></div><div class="progpct" id="ppct-gal">0%</div></div>
+    <h2 class="sec">Prioritized AI recommendations</h2>
+    <div class="filters" id="filters-gal">
+      <span class="chip on" data-f="all">All</span><span class="chip" data-f="critical">Critical</span><span class="chip" data-f="high">High</span>
+      <span class="chip" data-f="Talent">Talent</span><span class="chip" data-f="Product">Product</span><span class="chip" data-f="GTM">GTM</span>
+      <span class="chip" data-f="Customer">Customer</span><span class="chip" data-f="Risk">Risk</span>
+    </div>
+    <div class="cards" id="cards-gal"></div>
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://blogs.cisco.com/news/cisco-announces-the-intent-to-acquire-galileo">Cisco Blog — Galileo</a> ·
+      <a href="https://www.networkworld.com/article/4156855/cisco-to-acquire-galileo-for-ai-observability.html">Network World</a> ·
+      <a href="https://futurumgroup.com/insights/cisco-to-acquire-galileo-ai-agent-observability-cant-run-at-human-speed/">Futurum Group</a>
+      <div class="note">Illustrative decision aid. Owners, dates, and impact estimates are suggested placeholders — not Cisco disclosures. Deal terms were not publicly disclosed.</div>
+    </footer>
+  </section>
 
 </div>
+
+<script>
+const DATA = {
+  astrix: [
+    {ws:'Talent',prio:'critical',title:'Lock in Astrix leadership & core NHI engineers now',why:'Cisco explicitly called out Astrix\'s "world-class team." In security M&A, the founding team is the asset most at risk in the first 90 days.',action:'Approve and issue retention packages + clear role mandates to founders and top ~20 engineers within 30 days of close.',owner:'CHRO + SBG GM',when:'0–30 days',impact:'Protects the acquired IP & roadmap velocity'},
+    {ws:'Product',prio:'critical',title:'Stand up a joint Identity Intelligence integration pod',why:'Astrix\'s value only compounds once its NHI discovery feeds Cisco Identity Intelligence. Delay erodes the deal thesis.',action:'Charter a joint Cisco/Astrix pod with a named GA milestone for NHI signals inside Identity Intelligence.',owner:'VP Product, Security',when:'0–45 days',impact:'Unlocks unified identity visibility'},
+    {ws:'Product',prio:'high',title:'Extend NHI controls into Secure Access & Duo IAM',why:'Cisco stated intent to push Astrix capabilities into its zero-trust access stack so customers can discover, authenticate, and authorize agent identities.',action:'Sequence a roadmap: agent discovery → authorization → detect/respond, exposed through Secure Access and Duo.',owner:'Duo + Secure Access leads',when:'30–90 days',impact:'Turns capability into shippable customer value'},
+    {ws:'Product',prio:'high',title:'Wire Astrix telemetry into Splunk / any SIEM',why:'The differentiator is context: agent behavior flowing into Splunk/SIEM gives SOCs a unified view to respond at machine speed.',action:'Ship a supported Astrix→Splunk data path and a reference detection content pack for agentic threats.',owner:'Splunk integration team',when:'30–90 days',impact:'Extends value to the entire installed SOC base'},
+    {ws:'GTM',prio:'high',title:'Arm the field with the "Zero Trust for agents" story',why:'Only 24% of orgs can guardrail agent actions and 31% feel able to secure agentic AI — a live, quantified buying trigger.',action:'Ship a one-page narrative, demo, and objection-handling kit to sellers; brief top accounts within 60 days.',owner:'Product Marketing + Sales Enablement',when:'0–60 days',impact:'Converts readiness gap into pipeline'},
+    {ws:'Customer',prio:'critical',title:'Proactively reassure existing Astrix customers',why:'Acquisition uncertainty is the #1 churn driver for the acquired base. Silence loses customers before Cisco realizes value.',action:'Send a co-signed continuity note (roadmap, support, pricing) and offer 1:1 exec calls to top accounts within 2 weeks.',owner:'Customer Success + SBG GM',when:'0–14 days',impact:'Retains acquired ARR & references'},
+    {ws:'GTM',prio:'med',title:'Package a fast "agent security assessment" offer',why:'Most orgs can\'t even see their agents. A low-friction discovery assessment creates urgency and lands the platform.',action:'Launch a free/low-cost NHI + agent discovery assessment via Astrix tooling as a top-of-funnel motion.',owner:'GTM Strategy',when:'45–90 days',impact:'Creates repeatable land motion'},
+    {ws:'Risk',prio:'high',title:'Unify secrets management & close compliance items',why:'Astrix brings centralized secrets across vaults/cloud; overlapping tools and open compliance items add integration risk.',action:'Run a 30-day audit to rationalize secrets tooling and close diligence/compliance open items with owners and dates.',owner:'CISO + Integration PMO',when:'0–30 days',impact:'Reduces integration & security risk'},
+    {ws:'Product',prio:'med',title:'Publish a public integration roadmap & milestones',why:'A visible roadmap aligns Astrix, Cisco field, and customers on one plan and blunts competitor FUD in the agentic-identity race.',action:'Approve and publish a 2-quarter integration roadmap with 3–4 dated customer-facing milestones.',owner:'Integration PMO',when:'30–60 days',impact:'Aligns teams & pre-empts competitors'},
+    {ws:'Talent',prio:'med',title:'Merge into one operating rhythm & escalation path',why:'Two toolchains and two cultures stall without shared rituals. Early operating cadence is where integrations succeed or drift.',action:'Stand up a weekly integration steering review with a single dashboard, named workstream owners, and clear escalation.',owner:'Integration PMO',when:'0–30 days',impact:'Keeps every workstream unblocked'}
+  ],
+  wf: [
+    {ws:'Risk',prio:'critical',title:'Drive the deal to close & lock the integration plan',why:'This was announced as intent to acquire. Value creation can\'t start until close — and ambiguity stalls both teams.',action:'Run a tight diligence/close checklist with named owners and a target close date; pre-stage the Day-1 integration plan.',owner:'Corp Dev + Integration PMO',when:'0–30 days',impact:'Removes the gating blocker to all downstream work'},
+    {ws:'Talent',prio:'critical',title:'Retain the WideField team through close',why:'WideField is a ~Series A company (>$11M raised); its engineers are the asset and are most flight-risk during a pending deal.',action:'Prepare retention packages and clear Splunk roles/mandates to sign at close for founders and key engineers.',owner:'CHRO + Splunk GM',when:'0–30 days',impact:'Protects acquired IP & delivery velocity'},
+    {ws:'Product',prio:'critical',title:'Integrate WideField telemetry into Splunk\'s Agentic SOC',why:'The deal thesis: normalize and correlate identity, session, and activity telemetry so Splunk can reason across human, non-human, and AI activity.',action:'Charter a joint pod with a dated milestone to land WideField normalization/correlation inside the Agentic SOC.',owner:'VP Product, Splunk',when:'0–60 days',impact:'Delivers the core value of the acquisition'},
+    {ws:'Product',prio:'high',title:'Fuse Cisco Identity Intelligence signals into the pipeline',why:'Cisco called out feeding Identity Intelligence into WideField/Splunk to assemble session-level context across identity types.',action:'Define the data contract so Identity Intelligence signals flow into WideField correlation and Splunk detections.',owner:'Identity Intelligence + Splunk',when:'30–90 days',impact:'Turns siloed signals into unified context'},
+    {ws:'Product',prio:'high',title:'Ship "session blast-radius" detection use cases',why:'Identity now means who/what took action, under which authority, in which session, with what blast radius — the differentiating detection.',action:'Deliver 2–3 reference detections that flag out-of-context actions by authenticated users and approved agents.',owner:'Detection Engineering',when:'30–90 days',impact:'Makes the value tangible to SOC buyers'},
+    {ws:'Product',prio:'med',title:'Strengthen Cisco Data Fabric with identity/session context',why:'Cisco stated WideField will enrich the Data Fabric so customers get context to run AI safely — value beyond the SOC.',action:'Add identity + session intelligence as a supported enrichment layer in the Data Fabric roadmap.',owner:'Data Platform team',when:'60–120 days',impact:'Extends value across the platform'},
+    {ws:'GTM',prio:'high',title:'Enable the field on the Agentic SOC story',why:'This is Cisco\'s third agentic-security deal of 2026 (after Astrix & Galileo) — sellers need one coherent narrative, not three.',action:'Ship a unified "agentic trust layer" pitch, demo, and battlecard connecting WideField, Astrix, and Galileo.',owner:'Product Marketing + Enablement',when:'0–60 days',impact:'Converts the portfolio into pipeline'},
+    {ws:'Customer',prio:'high',title:'Reassure WideField & Splunk customers on continuity',why:'Pending-deal uncertainty drives churn in the acquired base and questions from the Splunk install base.',action:'Send a continuity note (roadmap, support, pricing) and offer exec 1:1s to top WideField accounts around close.',owner:'Customer Success',when:'0–30 days',impact:'Retains acquired ARR & references'},
+    {ws:'Risk',prio:'med',title:'De-conflict overlap across Astrix, Galileo & WideField',why:'Three 2026 identity/agent acquisitions risk overlapping capabilities, roadmaps, and customer confusion if not rationalized.',action:'Map capabilities across the three, define clear boundaries/hand-offs, and publish one integrated architecture.',owner:'Security Strategy + PMO',when:'30–60 days',impact:'Prevents internal overlap & market confusion'},
+    {ws:'Talent',prio:'med',title:'Fold WideField into a single Splunk operating rhythm',why:'Shared cadence and escalation is where multi-team integrations succeed or quietly drift.',action:'Stand up a weekly integration steering review with one dashboard, workstream owners, and a clear escalation path.',owner:'Integration PMO',when:'0–30 days',impact:'Keeps every workstream unblocked'}
+  ],
+  gal: [
+    {ws:'Product',prio:'critical',title:'Integrate Galileo into Splunk Observability Cloud',why:'The deal thesis is to extend Splunk\'s existing AI Agent Monitoring with Galileo\'s evaluation and guardrails — value starts when they\'re one product.',action:'Charter a joint pod with a dated milestone to land Galileo evals inside Splunk Observability Cloud\'s Agent Monitoring.',owner:'VP Product, Splunk',when:'0–60 days',impact:'Delivers the core value of the acquisition'},
+    {ws:'Talent',prio:'critical',title:'Retain Galileo\'s AI/ML founders & eval experts',why:'Galileo\'s edge is deep AI-evaluation expertise — a scarce, highly recruited skill set that walks out the door if not secured post-close.',action:'Lock retention packages and clear charters for founders and core research/eng within 30 days of close.',owner:'CHRO + Splunk GM',when:'0–30 days',impact:'Protects the acquired IP & talent moat'},
+    {ws:'Product',prio:'high',title:'Deliver one instrumentation layer across the ADLC',why:'Galileo spans the full agent development lifecycle — prompt optimization, model selection, production monitoring, guardrail enforcement.',action:'Sequence a roadmap exposing all four ADLC stages through a single Splunk-integrated instrumentation layer.',owner:'Product + Detection Eng',when:'30–90 days',impact:'Differentiated end-to-end coverage'},
+    {ws:'Product',prio:'high',title:'Ship "catch failures before users" as a flagship use case',why:'Detecting AI failures before they reach users is Galileo\'s headline value and the easiest story to demo to buyers.',action:'Deliver 2–3 reference eval + guardrail scenarios that block bad agent output pre-release in production.',owner:'Detection Engineering',when:'30–90 days',impact:'Makes the value tangible & demoable'},
+    {ws:'Risk',prio:'high',title:'Wire Galileo observability to Astrix & WideField identity',why:'Observability + identity is the unified agentic trust layer Cisco is assembling — the whole is worth more than the parts.',action:'Define how Galileo eval signals join Astrix/WideField identity context in Splunk for a single trust view.',owner:'Security Strategy + Splunk',when:'30–90 days',impact:'Turns three deals into one platform story'},
+    {ws:'GTM',prio:'high',title:'Position Splunk as the AI-era control plane',why:'Galileo concentrates network, security, and agent-behavior telemetry in one vendor — a strong differentiated narrative for sellers.',action:'Ship a "trustworthy, observable AI" pitch, demo, and battlecard for the field within 60 days.',owner:'Product Marketing + Enablement',when:'0–60 days',impact:'Converts positioning into pipeline'},
+    {ws:'Customer',prio:'critical',title:'Reassure Galileo\'s AI-team customers on continuity',why:'Galileo\'s users are AI/ML teams embedded in production workflows; uncertainty risks fast churn of a sticky, strategic base.',action:'Send a continuity note (roadmap, support, pricing) and offer exec 1:1s to top Galileo accounts within 2 weeks.',owner:'Customer Success',when:'0–14 days',impact:'Retains acquired ARR & AI references'},
+    {ws:'Product',prio:'med',title:'Surface Galileo eval metrics into Cisco Data Fabric',why:'AI quality/trust signals are valuable beyond observability — feeding the Data Fabric extends reach across the platform.',action:'Add Galileo evaluation metrics as a supported signal source in the Data Fabric roadmap.',owner:'Data Platform team',when:'60–120 days',impact:'Extends value beyond the SOC'},
+    {ws:'Risk',prio:'med',title:'De-conflict overlap across Astrix, WideField & Galileo',why:'Three 2026 agentic-security deals risk overlapping roadmaps and confusing customers if boundaries aren\'t drawn.',action:'Map capabilities across the three, define clear hand-offs, and publish one integrated architecture.',owner:'Security Strategy + PMO',when:'30–60 days',impact:'Prevents internal overlap & market confusion'},
+    {ws:'Talent',prio:'med',title:'Fold Galileo into a single Splunk operating rhythm',why:'Shared cadence and escalation is where multi-team integrations succeed or quietly drift.',action:'Stand up a weekly integration steering review with one dashboard, workstream owners, and a clear escalation path.',owner:'Integration PMO',when:'0–30 days',impact:'Keeps every workstream unblocked'}
+  ]
+};
+
+const prioMap = {critical:{cls:'p-critical',b:'critical',label:'Critical'},high:{cls:'p-high',b:'high',label:'High'},med:{cls:'p-med',b:'med',label:'Medium'}};
+
+function initDashboard(key){
+  const recs = DATA[key];
+  const done = {};
+  let filter = 'all';
+  const cardsEl = document.getElementById('cards-'+key);
+  const filtersEl = document.getElementById('filters-'+key);
+  const pbar = document.getElementById('pbar-'+key);
+  const ppct = document.getElementById('ppct-'+key);
+
+  function matches(r){
+    if(filter==='all') return true;
+    if(filter==='critical'||filter==='high') return r.prio===filter;
+    return r.ws===filter;
+  }
+  function updateProg(){
+    const total=recs.length, d=Object.values(done).filter(Boolean).length;
+    const pct=Math.round(d/total*100);
+    pbar.style.width=pct+'%'; ppct.textContent=pct+'%';
+  }
+  function render(){
+    cardsEl.innerHTML='';
+    recs.forEach((r,i)=>{
+      if(!matches(r)) return;
+      const p = prioMap[r.prio];
+      const el = document.createElement('div');
+      el.className = 'rec '+p.cls+(done[i]?' done':'');
+      el.innerHTML = `
+        <div class="rec-top"><div class="badges"><span class="b ${p.b}">${p.label}</span><span class="b ws">${r.ws}</span></div></div>
+        <div class="rec-title">${r.title}</div>
+        <p class="why">${r.why}</p>
+        <div class="action"><div class="h">▸ Recommended action</div><div class="txt">${r.action}</div></div>
+        <div class="meta"><span><b>Owner:</b> ${r.owner}</span><span><b>Window:</b> ${r.when}</span></div>
+        <div class="rec-foot"><span class="impact"><b>Impact:</b> ${r.impact}</span><button class="mark">${done[i]?'↩ Reopen':'✓ Mark done'}</button></div>`;
+      el.querySelector('.mark').addEventListener('click',()=>{done[i]=!done[i];render();});
+      cardsEl.appendChild(el);
+    });
+    updateProg();
+  }
+  filtersEl.addEventListener('click',e=>{
+    if(!e.target.classList.contains('chip')) return;
+    filtersEl.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+    e.target.classList.add('on'); filter=e.target.dataset.f; render();
+  });
+  render();
+}
+
+['astrix','wf','gal'].forEach(initDashboard);
+
+// hash router
+function route(){
+  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal'};
+  const id = map[location.hash] || 'view-home';
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===id));
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+route();
+</script>
 </body>
 </html>

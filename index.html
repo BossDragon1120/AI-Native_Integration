@@ -199,6 +199,41 @@
   .ddots i.on{background:#00bceb;width:22px;border-radius:5px}
   @media(max-width:820px){.dnav{width:40px;height:40px;font-size:24px}.dslide{max-width:92vw}}
 
+
+  /* lessons */
+  .v-lessons{--accent:#00bceb;--accent-d:#049fd9;--accent-bg:#e2f6fd;--glow:rgba(0,188,235,.32)}
+  .lessoncta{margin-top:16px;display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--line);
+    border-radius:16px;padding:18px 22px;box-shadow:var(--shadow);cursor:pointer;transition:transform .18s,box-shadow .18s}
+  .lessoncta:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(13,39,77,.16)}
+  .lessoncta .ic{width:54px;height:54px;border-radius:13px;background:#e2f6fd;color:#049fd9;display:flex;
+    align-items:center;justify-content:center;font-size:24px;font-weight:800;flex:0 0 auto;font-family:Century Schoolbook,serif}
+  .lessoncta .t1{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .lessoncta .t2{font-size:18px;font-weight:800;color:var(--navy);margin:2px 0}
+  .lessoncta .t3{font-size:13px;color:var(--ink2)}
+  .lessoncta .go{margin-left:auto;color:var(--cisco-d);font-weight:800;font-size:13.5px;white-space:nowrap}
+  .lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
+  .lcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .lc-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+  .lnum{width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;flex:0 0 auto;display:flex;
+    align-items:center;justify-content:center;font-family:Century Schoolbook,serif;font-size:17px;font-weight:800}
+  .lc-title{font-size:16.5px;font-weight:800;color:var(--navy);letter-spacing:-.01em;line-height:1.25;padding-top:4px}
+  .lbl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);margin:0 0 3px}
+  .lwhat{font-size:13px;color:var(--ink2);margin:0 0 4px}
+  .lrec{background:var(--accent-bg);border-radius:10px;padding:11px 13px;margin-top:11px}
+  .lrec .lbl{color:var(--cisco-d)}
+  .lrec .txt{font-size:13px;color:var(--ink);font-weight:600}
+  .lsrc{font-size:10.5px;color:var(--slate);margin-top:10px}
+  .lsrc a{color:var(--cisco-d);text-decoration:none}
+  .lsrc a:hover{text-decoration:underline}
+  .lclose{margin-top:18px;background:var(--navy);border-radius:16px;padding:22px 26px;color:#fff;position:relative;overflow:hidden}
+  .lclose::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,188,235,.3),transparent 70%);border-radius:50%}
+  .lclose h3{margin:0 0 8px;font-family:Century Schoolbook,serif;font-size:22px;font-weight:800;position:relative}
+  .lclose p{margin:0;color:#cfe0f1;font-size:14px;max-width:900px;position:relative}
+  .lclose .cta-row{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;position:relative}
+  .lclose .cbtn{background:#fff;color:var(--navy);font-weight:800;font-size:13px;border:none;border-radius:999px;padding:10px 18px;cursor:pointer}
+  .lclose .cbtn.ghost{background:rgba(255,255,255,.14);color:#fff}
+  @media(max-width:820px){.lesson-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -287,6 +322,17 @@
         <div class="dc-s">Portfolio scorecard, value-capture, talent, risks and board asks across all three deals — grounded in public info and IMO best practice.</div>
       </div>
       <span class="dc-btn">▶ Open slideshow</span>
+    </div>
+
+    <h2 class="sec">Lessons learned</h2>
+    <div class="lessoncta" onclick="location.hash='#lessons'">
+      <div class="ic">7</div>
+      <div>
+        <div class="t1">Post-Covid tech M&amp;A · 2022&ndash;2026</div>
+        <div class="t2">Seven lessons from recent tech acquisitions</div>
+        <div class="t3">What went right and wrong at Broadcom&ndash;VMware, Adobe&ndash;Figma and the AI acqui-hire wave &mdash; with recommendations for our execs.</div>
+      </div>
+      <span class="go">Read lessons &rarr;</span>
     </div>
 
     <footer>
@@ -432,6 +478,88 @@
     </footer>
   </section>
 
+
+  <!-- ============ LESSONS LEARNED ============ -->
+  <section id="view-lessons" class="view v-lessons">
+    <a class="backlink" href="#home">&larr; Integration home</a>
+    <header>
+      <div class="hbody">
+        <div class="eyebrow">Post-Covid tech M&amp;A · 2022&ndash;2026</div>
+        <h1>Lessons learned</h1>
+        <p>Seven hard-won lessons from public tech acquisitions since the pandemic — each with what happened and a concrete recommendation for the Cisco integration team.</p>
+      </div>
+    </header>
+    <h2 class="sec">Seven lessons — and what they mean for us</h2>
+    <div class="lesson-grid">
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">1</div><div class="lc-title">Fund retention like it's the asset — because it is</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">After closing VMware, Broadcom cut 19,000+ staff (over half the workforce), triggering a talent and customer exodus. PwC finds most acquirers set retention budgets far too small relative to the talent actually at risk.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Ring-fence out-of-cycle retention for the Astrix, WideField and Galileo founders and scarce AI/identity engineers — and embed HR from Day 0, not Day 100.</div></div>
+        <div class="lsrc">Source: <a href="https://cloudinfra.blog/the-broadcom-vmware-saga-acquisition-turbulence-talent-drain-and-the-rise-of-alternatives-in-2025/">Broadcom&ndash;VMware</a> · <a href="https://www.pwc.com/us/en/services/consulting/deals/library/ma-integration-survey.html">PwC M&amp;A Integration Survey</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">2</div><div class="lc-title">Value product synergies — don't just claim them</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">Bain's 2024 technology M&A research found product synergies are usually hypothesized but never actually valued, so they never get the investment rigor to materialize — even when they were the reason for the deal.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Treat the combined “agentic trust layer” as a funded product with named owners, targets and a roadmap — not a slide. Fund the integration work that makes the synergy real.</div></div>
+        <div class="lsrc">Source: <a href="https://www.bain.com/insights/technology-m-and-a-report-2024/">Bain Technology M&amp;A 2024</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">3</div><div class="lc-title">Spend on integration, and set the operating model early</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">PwC reports 78% of successful acquirers spend 6% or more of deal value on integration, and 60% now decide the long-term operating model before diligence even closes (up from 25% in 2019).</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Budget integration explicitly as a line item, and lock the target operating model plus a single IMO before WideField closes — not after.</div></div>
+        <div class="lsrc">Source: <a href="https://www.pwc.com/us/en/services/consulting/deals/library/ma-integration-survey.html">PwC M&amp;A Integration Survey</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">4</div><div class="lc-title">Price the regulatory path — and keep a Plan B</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">Adobe walked away from its $20B Figma deal in Dec 2023, paying a $1B reverse termination fee after concluding there was no clear path past EU/UK regulators. Broadcom&ndash;VMware still draws EU scrutiny years on.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Stress-test WideField's close timeline for antitrust risk, keep integration reversible until close, and note the FTC's 2026 signal that it will scrutinize talent-heavy “acqui-hire” structures.</div></div>
+        <div class="lsrc">Source: <a href="https://www.cnbc.com/2023/12/18/adobe-and-figma-call-off-20-billion-merger.html">CNBC: Adobe&ndash;Figma</a> · <a href="https://www.gibsondunn.com/termination-of-adobe-figma-merger/">Gibson Dunn</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">5</div><div class="lc-title">Don't turn value capture into customer churn</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">Broadcom's post-close VMware price increases (reported above 1,500% in some regions), the ended partner program and licensing changes drove customer backlash and pushed some accounts toward alternatives.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Protect pricing, roadmap and support for the acquired base and lead with continuity comms. Retaining acquired customers is part of the synergy math — dis-synergies net against gross.</div></div>
+        <div class="lsrc">Source: <a href="https://www.channelinsider.com/infrastructure/virtualization/broadcom-vmware-acquisition-changes-explained/">Channel Insider</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">6</div><div class="lc-title">Culture and talent are value drivers, not soft extras</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">EY and Deloitte consistently rank culture clash and talent loss among the top causes of value erosion in tech and digital deals — the “soft” issues that decide hard outcomes.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Make culture an explicit IMO workstream: one operating rhythm, shared rituals and clear charters across the three acquired teams from the first week.</div></div>
+        <div class="lsrc">Source: <a href="https://www.ey.com/en_us/insights/strategy-transactions/digital-m-a-three-talent-and-culture-challenges">EY</a> · <a href="https://www.deloitte.com/lu/en/our-thinking/future-of-advice/the-future-of-human-capital-in-m-and-a.html">Deloitte</a></div>
+      </div>
+      <div class="lcard">
+        <div class="lc-top"><div class="lnum">7</div><div class="lc-title">The acqui-hire era rewrites “buying a team”</div></div>
+        <p class="lbl">What happened</p>
+        <p class="lwhat">In 2024 the “reverse acqui-hire” emerged — Microsoft&ndash;Inflection and Google&ndash;Character.AI (~$2.7B) licensed technology and hired founders/teams without a full acquisition. The FTC signaled tighter scrutiny in 2026.</p>
+        <div class="lrec"><p class="lbl">Recommendation for our execs</p><div class="txt">Cisco chose full acquisitions — reinforce that advantage with strong retention and fast integration so the talent stays and delivers, and stay mindful of regulatory optics around concentrating scarce AI talent.</div></div>
+        <div class="lsrc">Source: <a href="https://www.forbes.com/sites/josipamajic/2025/07/15/why-acquihires-are-reshaping-silicon-valley-ai-investments/">Forbes</a> · <a href="https://ff.co/ai-acquihires/">Founders Forum</a></div>
+      </div>
+    </div>
+    <div class="lclose">
+      <h3>Applied to our three deals</h3>
+      <p>Across every deal that struggled, the same threads recur: the talent walked, the synergies stayed on slides, customers felt the squeeze, or regulators intervened. Our edge is to do the opposite — retain the people, fund the trust-layer synergies like products, protect the acquired base, and close WideField cleanly.</p>
+      <div class="cta-row">
+        <button class="cbtn" onclick="deckOpen()">&#9654; Open the board deck</button>
+        <button class="cbtn ghost" onclick="location.hash='#home'">Back to dashboards</button>
+      </div>
+    </div>
+    <footer>
+      <b>Sources (public):</b>
+      <a href="https://www.pwc.com/us/en/services/consulting/deals/library/ma-integration-survey.html">PwC M&amp;A Integration Survey</a> ·
+      <a href="https://www.bain.com/insights/technology-m-and-a-report-2024/">Bain Tech M&amp;A 2024</a> ·
+      <a href="https://www.cnbc.com/2023/12/18/adobe-and-figma-call-off-20-billion-merger.html">CNBC (Adobe&ndash;Figma)</a> ·
+      <a href="https://www.channelinsider.com/infrastructure/virtualization/broadcom-vmware-acquisition-changes-explained/">Channel Insider (Broadcom&ndash;VMware)</a> ·
+      <a href="https://www.forbes.com/sites/josipamajic/2025/07/15/why-acquihires-are-reshaping-silicon-valley-ai-investments/">Forbes (acqui-hires)</a>
+      <div class="note">Illustrative synthesis of public reporting and integration research (PwC, Bain, EY, Deloitte). Company examples are drawn from public sources and are not affiliated with or endorsed by Cisco.</div>
+    </footer>
+  </section>
+
 </div>
 
 <script>
@@ -526,7 +654,7 @@ function initDashboard(key){
 
 // hash router
 function route(){
-  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal'};
+  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal','#lessons':'view-lessons'};
   const id = map[location.hash] || 'view-home';
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===id));
   window.scrollTo(0,0);

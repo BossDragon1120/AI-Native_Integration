@@ -285,6 +285,33 @@
   .summ .s .t{font-size:11.5px;color:var(--ink2)}
 
   .fbody{display:flex;gap:22px;margin-top:10px}.fbody .fmain{flex:1.5;min-width:0}.fbody .fside{flex:1;min-width:0}.fside .raise{margin-top:0;height:100%}.panel{min-width:0}@media(max-width:820px){.fbody{flex-direction:column;gap:12px}}
+
+  .v-roadmap{--accent:#049fd9;--accent-d:#0d6efd;--accent-bg:#e2f6fd;--glow:rgba(0,188,235,.32)}
+  .rm-controls{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin:2px 0 6px}
+  .seg{display:inline-flex;background:var(--slate-bg);border-radius:999px;padding:3px}
+  .seg button{border:none;background:transparent;color:var(--ink2);font-weight:700;font-size:13px;padding:7px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+  .seg button.on{background:var(--navy);color:#fff}
+  .rm-list{margin-top:8px}
+  .rmmonth{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin:20px 0 9px}
+  .rmrow{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-left:5px solid var(--slate);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);margin-bottom:10px}
+  .rmrow.syn{background:linear-gradient(90deg,#f2fbf7 0,#ffffff 55%)}
+  .rmdate{flex:0 0 48px;text-align:center;border-right:1px solid var(--line);padding-right:12px}
+  .rmdate .dd{font-size:20px;font-weight:800;color:var(--navy);line-height:1}
+  .rmdate .mm{font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase}
+  .rmmid{flex:1;min-width:0}
+  .rmtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+  .ddot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .dealname{font-size:11px;font-weight:700;color:var(--ink2)}
+  .rmtitle{font-size:14.5px;font-weight:700;color:var(--navy)}
+  .rmowner{font-size:12px;color:var(--slate);margin-top:2px}
+  .rmside{flex:0 0 auto;display:flex;align-items:center}
+  .synb{background:#e7f6ef;color:#12805c;font-size:11px;font-weight:800;border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .rmlegend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);margin-top:14px}
+  .rmlegend .li{display:inline-flex;align-items:center;gap:6px}
+  .rmlegend .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .rm-empty{color:var(--slate);font-style:italic;padding:20px 0}
+  @media(max-width:820px){.rmrow{flex-wrap:wrap}.rmside{flex-basis:100%;margin-top:4px}.rm-controls{gap:10px}}
+
 </style>
 </head>
 <body>
@@ -300,6 +327,7 @@
       <a data-nav="home" href="#home">Overview</a>
       <a data-nav="deals" href="#deals">Deals</a>
       <a data-nav="board" href="#board">Board</a>
+      <a data-nav="roadmap" href="#roadmap">Roadmap</a>
       <a data-nav="steerco" href="#steerco">SteerCo</a>
       <a data-nav="functions" href="#functions">Functions</a>
       <a data-nav="pipeline" href="#pipeline">Pipeline</a>
@@ -344,6 +372,17 @@
         <div class="nt-s">Seven lessons from post-Covid tech M&amp;A (2022&ndash;2026) — Broadcom&ndash;VMware, Adobe&ndash;Figma and the acqui-hire wave — with recommendations.</div>
         <span class="nt-go" style="color:#e05a00">Read lessons &rarr;</span>
       </a>
+    </div>
+
+    <h2 class="sec">Integration roadmap</h2>
+    <div class="lessoncta" onclick="location.hash='#roadmap'">
+      <div class="ic" style="background:#e2f6fd;color:#049fd9">&#9670;</div>
+      <div>
+        <div class="t1">All deals · milestones &amp; synergies</div>
+        <div class="t2">See the uber integration roadmap</div>
+        <div class="t3">Milestones with owners and on-track / at-risk / overdue status across Astrix, WideField and Galileo — month, quarter or year view, with value-unlock markers.</div>
+      </div>
+      <span class="go">Open roadmap &rarr;</span>
     </div>
 
     <footer>
@@ -476,6 +515,47 @@
 
 
   <!-- ============ ASTRIX ============ -->
+
+  <section id="view-roadmap" class="view v-roadmap">
+    <a class="backlink" href="#home">&larr; Overview</a>
+    <header><div class="hbody">
+      <div class="eyebrow">Uber roadmap · all deals</div>
+      <h1>Roadmap</h1>
+      <p>Key milestones across Astrix, WideField and Galileo — with owners, status, and where value is unlocked via synergies. Switch the horizon to month, quarter or year.</p>
+      <span class="updated">As of Jul 26, 2026</span>
+    </div></header>
+
+    <div class="rm-controls">
+      <div class="seg" id="rm-seg">
+        <button data-v="month">Month</button>
+        <button data-v="quarter" class="on">Quarter</button>
+        <button data-v="year">Year</button>
+      </div>
+      <div class="filters" id="rm-status" style="margin:0">
+        <span class="chip on" data-s="all">All</span>
+        <span class="chip" data-s="on">On track</span>
+        <span class="chip" data-s="risk">At risk</span>
+        <span class="chip" data-s="over">Overdue</span>
+        <span class="chip" data-s="done">Done</span>
+      </div>
+    </div>
+
+    <div class="summ" id="rm-summ"></div>
+    <div class="rm-list" id="rm-list"></div>
+
+    <div class="rmlegend">
+      <span class="li"><span class="sw" style="background:#00bceb"></span>Astrix</span>
+      <span class="li"><span class="sw" style="background:#fd7a2b"></span>WideField</span>
+      <span class="li"><span class="sw" style="background:#fd1875"></span>Galileo</span>
+      <span class="li"><span class="sw" style="background:#123a6e"></span>Cross-deal</span>
+      <span class="li"><span class="sw" style="background:#1e9e6a"></span>On track</span>
+      <span class="li"><span class="sw" style="background:#e0a400"></span>At risk</span>
+      <span class="li"><span class="sw" style="background:#d0453b"></span>Overdue</span>
+      <span class="li"><span class="synb" style="padding:2px 8px">&#9670; $ synergy</span> value unlocked</span>
+    </div>
+
+    <footer><div class="note">Illustrative roadmap synthesized from the three deals' public milestones and standard integration practice. Dates, owners, statuses and synergy figures are placeholders for the integration team to edit — not Cisco disclosures.</div></footer>
+  </section>
 
   <section id="view-steerco" class="view v-steerco">
     <a class="backlink" href="#home">&larr; Overview</a>
@@ -993,10 +1073,10 @@ function initDashboard(key){
 
 // hash router
 function route(){
-  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal','#lessons':'view-lessons','#deals':'view-deals','#board':'view-board','#steerco':'view-steerco','#functions':'view-functions','#pipeline':'view-pipeline'};
+  const map={'#astrix':'view-astrix','#wf':'view-wf','#gal':'view-gal','#lessons':'view-lessons','#deals':'view-deals','#board':'view-board','#steerco':'view-steerco','#functions':'view-functions','#pipeline':'view-pipeline','#roadmap':'view-roadmap'};
   const id = map[location.hash] || 'view-home';
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===id));
-  const grp={'view-home':'home','view-deals':'deals','view-astrix':'deals','view-wf':'deals','view-gal':'deals','view-board':'board','view-lessons':'lessons','view-steerco':'steerco','view-functions':'functions','view-pipeline':'pipeline'}[id]||'home';
+  const grp={'view-home':'home','view-deals':'deals','view-astrix':'deals','view-wf':'deals','view-gal':'deals','view-board':'board','view-lessons':'lessons','view-steerco':'steerco','view-functions':'functions','view-pipeline':'pipeline','view-roadmap':'roadmap'}[id]||'home';
   document.querySelectorAll('.navlinks a').forEach(a=>a.classList.toggle('active',a.dataset.nav===grp));
   window.scrollTo(0,0);
 }
@@ -1052,6 +1132,96 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowLeft') deckNav(-1);
 });
 document.getElementById('deckModal').addEventListener('click',e=>{ if(e.target.id==='deckModal') deckClose(); });
+</script>
+
+
+<script>
+(function(){
+  var NOW = new Date('2026-07-26T00:00:00');
+  var DEAL = {astrix:{c:'#00bceb',n:'Astrix'}, wf:{c:'#fd7a2b',n:'WideField'}, gal:{c:'#fd1875',n:'Galileo'}, cross:{c:'#123a6e',n:'Cross-deal'}};
+  var ST = {on:{c:'#1e9e6a',l:'On track',v:'g'}, risk:{c:'#e0a400',l:'At risk',v:'a'}, over:{c:'#d0453b',l:'Overdue',v:'r'}, done:{c:'#5b6b80',l:'Done',v:'n'}};
+  var MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MOF= ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var MILE = [
+    {d:'2026-05-22',deal:'gal',t:'Galileo acquisition closed',o:'Corporate Development',s:'done',syn:0},
+    {d:'2026-06-29',deal:'astrix',t:'Astrix acquisition closed',o:'Corporate Development',s:'done',syn:0},
+    {d:'2026-07-15',deal:'wf',t:'Sign key-employee retention grants (pre-close)',o:'Francine Katsoudas — CPO',s:'over',syn:0},
+    {d:'2026-07-20',deal:'cross',t:'Unified IMO & operating cadence stood up',o:'Integration PMO',s:'done',syn:0},
+    {d:'2026-08-05',deal:'cross',t:'Integration SteerCo: approve retention & architecture',o:'SVP/GM Security',s:'on',syn:0},
+    {d:'2026-08-12',deal:'wf',t:'Confirm WideField close date & TSA scope',o:'Dev Stahlkopf — Legal',s:'risk',syn:0},
+    {d:'2026-08-15',deal:'astrix',t:'Astrix NHI signals GA in Identity Intelligence',o:'Peter Bailey — Security',s:'on',syn:6},
+    {d:'2026-08-22',deal:'gal',t:'Galileo evals live in Splunk Observability (beta)',o:'Kamal Hathi — Splunk',s:'on',syn:4},
+    {d:'2026-08-29',deal:'cross',t:'Unified trust-layer GTM kit to the field',o:'Product Marketing / GTM',s:'risk',syn:0},
+    {d:'2026-09-10',deal:'wf',t:'WideField close & Day-1 cutover',o:'Corp Dev / Legal',s:'risk',syn:0},
+    {d:'2026-09-20',deal:'astrix',t:'NHI controls GA in Secure Access & Duo',o:'Peter Bailey — Security',s:'on',syn:9},
+    {d:'2026-09-30',deal:'cross',t:'Synergy baselines frozen at close',o:'Mark Patterson — CFO',s:'on',syn:0},
+    {d:'2026-10-15',deal:'gal',t:'Full ADLC instrumentation GA (prompt → guardrails)',o:'Jeetu Patel — CPO',s:'on',syn:7},
+    {d:'2026-10-31',deal:'wf',t:'WideField telemetry GA in Splunk Agentic SOC',o:'Kamal Hathi — Splunk',s:'on',syn:8},
+    {d:'2026-11-30',deal:'cross',t:'Cross-deal trust layer live (Astrix + WideField + Galileo)',o:'Jeetu Patel — CPO',s:'on',syn:15},
+    {d:'2026-12-15',deal:'cross',t:'Data Fabric identity + eval enrichment GA',o:'Data Platform / CIO',s:'on',syn:6},
+    {d:'2027-01-31',deal:'cross',t:'First full quarter of combined-SKU bookings',o:'Go-to-Market',s:'on',syn:20},
+    {d:'2027-03-31',deal:'cross',t:'Integration close-out & run-rate synergy review',o:'Integration PMO + Finance',s:'on',syn:12},
+    {d:'2027-06-30',deal:'cross',t:'FY27 exit run-rate synergy target achieved',o:'Mark Patterson — CFO',s:'on',syn:25}
+  ];
+  var view='quarter', sfilter='all';
+  var HZ={month:31,quarter:92,year:365};
+  function days(n){ return n*24*3600*1000; }
+  function shown(){
+    var hz=HZ[view], lo=new Date(NOW.getTime()-days(70)), hi=new Date(NOW.getTime()+days(hz));
+    return MILE.filter(function(m){
+      var dt=new Date(m.d+'T00:00:00');
+      var inWin=(dt>=lo && dt<=hi) || m.s==='over';
+      if(!inWin) return false;
+      if(sfilter!=='all' && m.s!==sfilter) return false;
+      return true;
+    }).sort(function(a,b){return new Date(a.d)-new Date(b.d);});
+  }
+  function render(){
+    var items=shown();
+    var list=document.getElementById('rm-list'); list.innerHTML='';
+    var cOn=0,cRisk=0,cOver=0,syn=0;
+    items.forEach(function(m){ if(m.s==='on')cOn++; if(m.s==='risk')cRisk++; if(m.s==='over')cOver++; syn+=m.syn; });
+    // summary
+    document.getElementById('rm-summ').innerHTML =
+      '<div class="s"><div class="n">'+items.length+'</div><div class="t">Milestones in view</div></div>'+
+      '<div class="s"><div class="n" style="color:#1e9e6a">'+cOn+'</div><div class="t">On track</div></div>'+
+      '<div class="s"><div class="n" style="color:#e0a400">'+cRisk+'</div><div class="t">At risk</div></div>'+
+      '<div class="s"><div class="n" style="color:#d0453b">'+cOver+'</div><div class="t">Overdue</div></div>'+
+      '<div class="s"><div class="n" style="color:#12805c">$'+syn+'M</div><div class="t">Synergy value in view</div></div>';
+    if(!items.length){ list.innerHTML='<div class="rm-empty">No milestones in this window with the current filter.</div>'; return; }
+    var curMonth='';
+    items.forEach(function(m){
+      var dt=new Date(m.d+'T00:00:00');
+      var mlabel=MOF[dt.getMonth()]+' '+dt.getFullYear();
+      if(mlabel!==curMonth){ curMonth=mlabel; var hd=document.createElement('div'); hd.className='rmmonth'; hd.textContent=mlabel; list.appendChild(hd); }
+      var deal=DEAL[m.deal], st=ST[m.s];
+      var row=document.createElement('div');
+      row.className='rmrow'+(m.syn>0?' syn':'');
+      row.style.borderLeftColor=st.c;
+      var syb = m.syn>0 ? '<span class="synb">&#9670; $'+m.syn+'M synergy</span>' : '';
+      row.innerHTML =
+        '<div class="rmdate"><div class="dd">'+dt.getDate()+'</div><div class="mm">'+MO[dt.getMonth()]+" '"+String(dt.getFullYear()).slice(2)+'</div></div>'+
+        '<div class="rmmid">'+
+          '<div class="rmtop"><span class="ddot" style="background:'+deal.c+'"></span><span class="dealname">'+deal.n+'</span><span class="vtag '+st.v+'">'+st.l+'</span></div>'+
+          '<div class="rmtitle">'+m.t+'</div>'+
+          '<div class="rmowner">Owner: '+m.o+'</div>'+
+        '</div>'+
+        '<div class="rmside">'+syb+'</div>';
+      list.appendChild(row);
+    });
+  }
+  document.getElementById('rm-seg').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    this.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); view=b.dataset.v; render();
+  });
+  document.getElementById('rm-status').addEventListener('click',function(e){
+    if(!e.target.classList.contains('chip')) return;
+    this.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
+    e.target.classList.add('on'); sfilter=e.target.dataset.s; render();
+  });
+  render();
+})();
 </script>
 
 </body>
